@@ -132,6 +132,12 @@
     if (GS.state.status === 'playing' && !timerInterval) {
       startTimer();
     }
+
+    // Demo mode: auto-flip to playing so a single shared link is ready to play
+    // without anyone clicking Start.
+    if (mountCtx.autoStart && GS.state.status === 'lobby') {
+      startSession();
+    }
   }
 
   // ============================================================================

@@ -7,6 +7,8 @@
 //   ?mode=host                  → host console (generates sessiecode)
 //   ?mode=player&code=VO-1234   → player join screen (code prefilled if given)
 //   ?mode=solo                  → bypass lobby, play locally (dev / single-laptop)
+//   ?mode=demo                  → bypass lobby AND auto-start the timer (sharable
+//                                  one-link preview — no host interaction needed)
 //   (no params)                 → landing page with three big choices
 // ============================================================================
 
@@ -21,6 +23,7 @@
     const params = new URLSearchParams(window.location.search);
     const mode = params.get('mode');
     if (mode === 'solo') return showGame({ solo: true });
+    if (mode === 'demo') return showGame({ solo: true, autoStart: true });
     if (mode === 'host') return renderHostLobby();
     if (mode === 'player') return renderPlayerLobby(params.get('code') || '');
     return renderLanding();
@@ -48,6 +51,7 @@
           role: window.Sync.role() || 'solo',
           myTeamId: window.Sync.myTeamId(),
           sessionCode: window.Sync.sessionCode(),
+          autoStart: !!ctx.autoStart,
         });
         window.UI._mounted = true;
         // Start two-way binding to Firebase AFTER mount so animations have a
