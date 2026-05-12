@@ -1,0 +1,17 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+*.swp
+.vscode/
+.idea/
+
+# OneDrive sync junk
+*.tmp
+~$*
+
+# Local-only configs (none right now, but reserve)
+.env
+.env.local
+*.local.json

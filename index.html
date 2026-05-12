@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <title>Van Oord — Automate or Sink</title>
+  <meta name="viewport" content="width=1400, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Albert+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Lobby screen (visible until host starts the session) -->
+<div class="lobby-screen" data-role="lobby-screen"></div>
+
+<!-- Game screen (hidden until session.status === 'playing') -->
+<div class="app" data-role="game-screen" data-screen-label="01 Game Board" hidden>
+  <!-- ============================== TOP BAR ============================== -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">VO</div>
+      <div>
+        <div class="brand-title">Automate or Sink</div>
+        <div class="brand-sub">Van Oord · Co-op Training</div>
+      </div>
+    </div>
+
+    <div class="session-block">
+      <span class="lbl">Session</span>
+      <span class="code" data-role="session-code">VO-0000</span>
+    </div>
+
+    <div class="timer" data-role="timer">
+      <span class="lbl">Time left</span>
+      <span class="val" data-role="timer-val">20:00</span>
+    </div>
+
+    <div class="host-controls">
+      <button class="primary" data-role="btn-start">Start session</button>
+      <button data-role="btn-pause" disabled>Pause</button>
+      <button data-role="btn-reset">Reset</button>
+    </div>
+  </header>
+
+  <!-- ============================== HOST CONSOLE (left) ============================== -->
+  <aside class="host">
+    <div class="panel-title">Host Console <span class="accent">●  live</span></div>
+    <h1 data-role="host-title">Lobby</h1>
+    <p class="sub" data-role="host-sub">Players are joining…</p>
+
+    <div class="panel-title">Teams</div>
+    <div class="teams-list" data-role="teams-list"></div>
+
+    <div class="panel-title">Activity feed</div>
+    <div class="feed" data-role="feed"></div>
+  </aside>
+
+  <!-- ============================== BOARD (center) ============================== -->
+  <main class="board" data-role="board">
+    <div class="board-hint" data-role="board-hint">
+      <span><span class="k">DRAG</span>rotate</span>
+      <span><span class="k">SHIFT+DRAG</span>pan</span>
+      <span><span class="k">SCROLL</span>zoom</span>
+      <span><span class="k">DBL-CLICK</span>reset</span>
+    </div>
+  </main>
+
+  <!-- ============================== PLAYER PANEL (right) ============================== -->
+  <aside class="player">
+    <div class="player-tabs" data-role="player-tabs"></div>
+    <div class="player-body" data-role="player-body"></div>
+  </aside>
+
+  <!-- ============================== FOOTER (meter) ============================== -->
+  <footer class="footer">
+    <span class="footer-eyebrow">Collective score</span>
+    <div class="meter-bar">
+      <div class="meter-fill" data-role="meter-fill"></div>
+      <div class="meter-ticks">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="meter-label" data-role="meter-label">Automation Meter</div>
+    </div>
+    <div class="meter-value" data-role="meter-value">0%</div>
+  </footer>
+</div>
+
+<!-- modal host -->
+<div class="modal-bg" id="modal-host" style="display:none;"></div>
+
+<!-- Firebase SDK (compat = v8-style global API, no bundler needed) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-database-compat.js"></script>
+<script>
+  // apiKey is a public client identifier — access control lives in Realtime DB rules.
+  firebase.initializeApp({
+    apiKey: "AIzaSyAFe6jw54lofKtD2sJ6v-lA7c2Pz4vKc7E",
+    authDomain: "van-oord-monopoly.firebaseapp.com",
+    databaseURL: "https://van-oord-monopoly-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "van-oord-monopoly",
+    storageBucket: "van-oord-monopoly.firebasestorage.app",
+    messagingSenderId: "104925929440",
+    appId: "1:104925929440:web:df4d4d827ae04145655585",
+  });
+  window.DB = firebase.database();
+</script>
+
+<!-- three.js + game scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="game-data.js"></script>
+<script src="game-state.js"></script>
+<script src="sync.js"></script>
+<script src="lobby.js"></script>
+<script src="tile-meshes.js"></script>
+<script src="pawn-meshes.js"></script>
+<script src="board-3d.js"></script>
+<script src="ui.js"></script>
+<script src="main.js"></script>
+<script src="tweaks.js"></script>
+
+</body>
+</html>
