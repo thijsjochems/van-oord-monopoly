@@ -467,44 +467,75 @@
       inner.receiveShadow = true;
       scene.add(inner);
 
-      // ---- Van Oord logo banner (positioned in inner panel, NOT at dead center) ----
-      // Real Van Oord brand: navy + yellow, heavy industrial sans-serif uppercase,
-      // with a yellow rule under the wordmark.
+      // ---- Van Oord logo banner (real SVG from vanoord.com, not a custom wordmark) ----
+      // The SVG is loaded async; we redraw the canvas + flag the texture once the
+      // image is ready. Until then the banner shows just the tagline.
       const logoCanvas = document.createElement('canvas');
       logoCanvas.width = 1024;
       logoCanvas.height = 320;
       const lc = logoCanvas.getContext('2d');
-      lc.clearRect(0, 0, 1024, 320);
-      lc.textAlign = 'center';
-      lc.textBaseline = 'middle';
-      // wordmark
-      lc.fillStyle = '#FFFFFF';
-      lc.font = '900 154px "Archivo", sans-serif';
-      lc.fillText('VAN OORD', 512, 120);
-      // yellow rule (Van Oord brand accent)
-      lc.fillStyle = '#FFCD00';
-      lc.fillRect(200, 200, 624, 8);
-      // pay-off
-      lc.fillStyle = '#FFCD00';
-      lc.font = '900 56px "Archivo", sans-serif';
-      lc.fillText('AUTOMATE  ·  OR SINK', 512, 252);
-
       const logoTex = new T.CanvasTexture(logoCanvas);
       logoTex.anisotropy = 8;
-      // place the logo as a wide banner at the back of the inner panel
-      // (out of the way of the central pot and the diagonal card decks)
+
+      function drawVoBanner(voImg) {
+        lc.clearRect(0, 0, 1024, 320);
+        lc.textAlign = 'center';
+        lc.textBaseline = 'middle';
+        if (voImg) {
+          // Real VO logo is 240x80 (3:1). Scale to fit the upper half of the canvas.
+          const h = 150;
+          const w = h * (240 / 80); // = 450
+          lc.drawImage(voImg, (1024 - w) / 2, 20, w, h);
+        }
+        // yellow rule + tagline below the logo
+        lc.fillStyle = '#FFCD00';
+        lc.fillRect(200, 200, 624, 6);
+        lc.font = '900 56px "Archivo", sans-serif';
+        lc.fillStyle = '#FFCD00';
+        lc.fillText('AUTOMATE  ·  OR SINK', 512, 252);
+        logoTex.needsUpdate = true;
+      }
+      drawVoBanner(null); // initial render with tagline only
+      const voImg = new Image();
+      voImg.onload = () => drawVoBanner(voImg);
+      voImg.src = 'logos/van-oord.svg';
+
       const banner = new T.Mesh(
         new T.PlaneGeometry(14, 4.4),
         new T.MeshBasicMaterial({ map: logoTex, transparent: true }),
       );
       banner.rotation.x = -Math.PI / 2;
-      banner.position.set(0, TILE_H + 0.014, -6.0); // upper half of inner area
+      banner.position.set(0, TILE_H + 0.014, -6.0);
       scene.add(banner);
-      // Mirror banner on opposite side too so it reads from both halves of the room
       const bannerB = banner.clone();
       bannerB.position.z = 6.0;
-      bannerB.rotation.z = Math.PI; // flip text so it reads from the opposite side
+      bannerB.rotation.z = Math.PI;
       scene.add(bannerB);
+
+      // ---- Subtle Another Dimension mark in two opposite corners of the inner panel ----
+      const adCanvas = document.createElement('canvas');
+      adCanvas.width = 256;
+      adCanvas.height = 256;
+      const adCtx = adCanvas.getContext('2d');
+      const adTex = new T.CanvasTexture(adCanvas);
+      adTex.anisotropy = 8;
+      const adImg = new Image();
+      adImg.onload = () => {
+        adCtx.clearRect(0, 0, 256, 256);
+        adCtx.drawImage(adImg, 0, 0, 256, 256);
+        adTex.needsUpdate = true;
+      };
+      adImg.src = 'logos/another-dimension-mark.svg';
+
+      const adMat = new T.MeshBasicMaterial({ map: adTex, transparent: true, opacity: 0.55 });
+      // small mark in the corner of the inner panel where nothing else lives
+      const adA = new T.Mesh(new T.PlaneGeometry(1.6, 1.6), adMat);
+      adA.rotation.x = -Math.PI / 2;
+      adA.position.set(-12, TILE_H + 0.013, -12);
+      scene.add(adA);
+      const adB = adA.clone();
+      adB.position.set(12, TILE_H + 0.013, 12);
+      scene.add(adB);
 
       // ---- Chance + Community Chest card stacks ----
       this._buildCardStacks(scene);
