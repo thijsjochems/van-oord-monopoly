@@ -45,6 +45,7 @@
     if (!ctx.solo && window.Sync.isLive() && window.Sync.snapshot()) {
       _hydrateGameState(window.Sync.snapshot());
     }
+    const urlMode = new URLSearchParams(window.location.search).get('mode') || 'landing';
     requestAnimationFrame(() => {
       if (window.UI && !window.UI._mounted) {
         window.UI.mount({
@@ -52,6 +53,7 @@
           myTeamId: window.Sync.myTeamId(),
           sessionCode: window.Sync.sessionCode(),
           autoStart: !!ctx.autoStart,
+          mode: urlMode, // 'solo' | 'demo' | 'host' | 'player' | 'landing'
         });
         window.UI._mounted = true;
         // Start two-way binding to Firebase AFTER mount so animations have a
@@ -353,8 +355,11 @@
   }
 
   // ---- helpers --------------------------------------------------------------
+  // Inline SVG for excavator (no good unicode option). Same logic as ui.js.
+  const _EXCAVATOR_SVG = '<svg viewBox="0 0 24 18" width="20" height="15" fill="currentColor" style="display:inline-block;vertical-align:-3px;"><rect x="2" y="13" width="14" height="3.5" rx="1.5"/><rect x="5" y="7.5" width="6" height="5.5" rx="0.5"/><path d="M11 9 L19 3 L21 5 L12.5 11 Z"/><path d="M19 3 L22.5 3 L22 6 L19.5 5 Z"/></svg>';
   function _pawnEmoji(p) {
-    return ({ excavator: '🚜', ship: '🚢', truck: '🚛', dumptruck: '🪣', crane: '🏗️' })[p] || '⚙️';
+    if (p === 'excavator') return _EXCAVATOR_SVG;
+    return ({ ship: '🚢', truck: '🚛', dumptruck: '🪣', crane: '🏗️' })[p] || '⚙️';
   }
   function _escape(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({

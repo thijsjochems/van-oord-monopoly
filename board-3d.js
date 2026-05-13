@@ -60,31 +60,67 @@
     return { x, y: 0, z, w: TILE_W, d: TILE_D, rotY, side, isCorner: false };
   }
 
-  function getPawnSpot(idx, pawnIndex, totalPawns) {
-    // Returns world-space position for a pawn on this tile, offset to avoid overlap.
+  // Five-spot pattern (dice-face 5) for non-corner tiles. Slot 0 sits dead-centre,
+  // slots 1-4 form a tight square around it. All slots stay well inside the
+  // tile bounds (tile is 3.0 wide × 4.5 deep, edges at ±1.5 / ±2.25).
+  const SLOT_PATTERN_SIDE = [
+    { x:  0.0, z:  0.5 },  // 0: centre (slightly toward outer edge for label visibility)
+    { x: -0.7, z: -0.1 },  // 1: NW
+    { x:  0.7, z: -0.1 },  // 2: NE
+    { x: -0.7, z:  1.1 },  // 3: SW
+    { x:  0.7, z:  1.1 },  // 4: SE
+  ];
+
+  function getPawnSpot(idx, pawnIndex, teams) {
+    // Returns world-space position for a pawn on this tile.
+    //
+    // Slot assignment is dynamic: the first pawn that sits on a tile (by team
+    // index) takes the centre slot; siblings cluster around. Pawn alone on a
+    // tile → slot 0 → centred. This matches the "physical board" feel the user
+    // asked for, instead of every team always sitting in a fixed lane.
     const tf = tileTransform(idx);
-    // Deterministic pseudo-random jitter (so positions are stable across re-renders).
+    const totalPawns = Array.isArray(teams) ? teams.length : teams;
+
+    // Find which teams currently occupy this tile, sorted by team index. Always
+    // include the moving pawn so its slot is stable across the hop animation.
+    let slotIndex = pawnIndex;
+    let occupantCount = totalPawns;
+    if (Array.isArray(teams)) {
+      const occupants = [];
+      for (let i = 0; i < teams.length; i++) {
+        if (i === pawnIndex || teams[i].position === idx) occupants.push(i);
+      }
+      occupants.sort((a, b) => a - b);
+      slotIndex = Math.max(0, occupants.indexOf(pawnIndex));
+      occupantCount = occupants.length;
+    }
+
+    // Deterministic pseudo-random jitter (stable across re-renders).
     const seedX = Math.sin(pawnIndex * 17.3 + idx * 41.7) * 43758.5453;
     const seedZ = Math.sin(pawnIndex * 29.1 + idx * 11.3) * 43758.5453;
-    const seedR = Math.sin(pawnIndex * 7.9 + idx * 5.5)  * 43758.5453;
-    const jx = ((seedX - Math.floor(seedX)) - 0.5) * 0.35;
-    const jz = ((seedZ - Math.floor(seedZ)) - 0.5) * 0.35;
-    const jr = ((seedR - Math.floor(seedR)) - 0.5) * 0.6; // rotation jitter (radians)
+    const seedR = Math.sin(pawnIndex * 7.9  + idx * 5.5)  * 43758.5453;
+    const jx = ((seedX - Math.floor(seedX)) - 0.5) * 0.20;
+    const jz = ((seedZ - Math.floor(seedZ)) - 0.5) * 0.20;
+    const jr = ((seedR - Math.floor(seedR)) - 0.5) * 0.5;
 
-    // Pawns travel over the project-name end of the tile (the label area). For
-    // side tiles, this is +Z in local frame. For corners, just centered + scattered.
     let localX, localZ;
     if (tf.isCorner) {
-      // scattered on a small circle inside the corner pad
-      const ang = (pawnIndex / totalPawns) * Math.PI * 2 + 0.3;
-      const r = 1.0 + (jx * 0.5);
-      localX = Math.cos(ang) * r + jx * 0.3;
-      localZ = Math.sin(ang) * r + jz * 0.3;
+      // Corner: slot 0 centred, others on a ring around the centre.
+      if (slotIndex === 0) {
+        localX = jx * 0.4;
+        localZ = jz * 0.4;
+      } else {
+        const ringSpots = Math.max(1, occupantCount - 1);
+        const ang = ((slotIndex - 1) / ringSpots) * Math.PI * 2 + 0.3;
+        const r = 1.1;
+        localX = Math.cos(ang) * r + jx * 0.3;
+        localZ = Math.sin(ang) * r + jz * 0.3;
+      }
     } else {
-      // line them up across the tile width with random jitter
-      const baseX = ((pawnIndex - (totalPawns - 1) / 2) * 0.7);
-      localX = baseX + jx;
-      localZ = 0.6 + jz; // sit on the inner edge of the label band
+      // Side tile: dice-5 pattern, all slots within tile bounds.
+      const slot = SLOT_PATTERN_SIDE[slotIndex % SLOT_PATTERN_SIDE.length];
+      localX = slot.x + jx;
+      localZ = slot.z + jz;
     }
 
     // rotate local to world
@@ -865,19 +901,32 @@
     }
 
     setPawns(teams) {
-      // clear previous
+      // clear previous pawns AND tile-frame markers
       for (const [, p] of this.pawns) this.scene.remove(p);
       this.pawns.clear();
+      if (this.tileMarkers) {
+        for (const [, m] of this.tileMarkers) this.scene.remove(m);
+      }
+      this.tileMarkers = new Map();
+
       teams.forEach((team, i) => {
         const pawn = window.PawnMeshes.buildPawn(team.pawn, parseInt(team.color.slice(1), 16), parseInt(team.accent.slice(1), 16));
         pawn.userData.teamId = team.id;
         pawn.userData.teamIndex = i;
         pawn.scale.setScalar(0.65);
-        const spot = getPawnSpot(team.position, i, teams.length);
+        const spot = getPawnSpot(team.position, i, teams);
         pawn.position.set(spot.x, spot.y, spot.z);
         pawn.rotation.y = spot.rotY;
         this.scene.add(pawn);
         this.pawns.set(team.id, pawn);
+
+        // Tile-frame marker in team colour, sits on the tile to make pawn
+        // location instantly readable across the board.
+        const colorInt = parseInt(team.color.slice(1), 16);
+        const marker = this._buildTileMarker(colorInt);
+        this._snapMarkerToTile(marker, team.position);
+        this.scene.add(marker);
+        this.tileMarkers.set(team.id, marker);
       });
     }
 
@@ -885,10 +934,73 @@
       teams.forEach((team, i) => {
         const pawn = this.pawns.get(team.id);
         if (!pawn) return;
-        const spot = getPawnSpot(team.position, i, teams.length);
+        const spot = getPawnSpot(team.position, i, teams);
         pawn.position.set(spot.x, spot.y, spot.z);
         pawn.rotation.y = spot.rotY;
+        const marker = this.tileMarkers && this.tileMarkers.get(team.id);
+        if (marker) this._snapMarkerToTile(marker, team.position);
       });
+    }
+
+    // ----- Tile-frame markers (per-team highlight of current tile) -----
+    _buildTileMarker(colorInt) {
+      const T = THREE;
+      const mat = new T.MeshStandardMaterial({
+        color: colorInt, emissive: colorInt, emissiveIntensity: 0.85,
+        transparent: true, opacity: 0.95, roughness: 0.45,
+      });
+      const g = new T.Group();
+      // Marker is sized for SIDE tiles by default; we scale at snap time for corners.
+      const w = TILE_W * 0.96;
+      const d = TILE_D * 0.96;
+      const t = 0.08; // strip thickness
+      const h = 0.05; // raised above tile
+      // 4 thin strips forming an outline
+      const top    = new T.Mesh(new T.BoxGeometry(w, h, t), mat);
+      const bottom = new T.Mesh(new T.BoxGeometry(w, h, t), mat);
+      top.position.set(0, 0,  d / 2 - t / 2);
+      bottom.position.set(0, 0, -d / 2 + t / 2);
+      const left  = new T.Mesh(new T.BoxGeometry(t, h, d - 2 * t), mat);
+      const right = new T.Mesh(new T.BoxGeometry(t, h, d - 2 * t), mat);
+      left.position.set(-w / 2 + t / 2, 0, 0);
+      right.position.set( w / 2 - t / 2, 0, 0);
+      g.add(top, bottom, left, right);
+      g.userData.baseW = w;
+      g.userData.baseD = d;
+      return g;
+    }
+
+    _snapMarkerToTile(marker, idx) {
+      const tf = tileTransform(idx);
+      marker.position.set(tf.x, TILE_H + 0.04, tf.z);
+      marker.rotation.y = tf.rotY;
+      // Scale up for corner tiles (which are square and bigger than side tiles).
+      const targetW = tf.isCorner ? CORNER * 0.96 : TILE_W * 0.96;
+      const targetD = tf.isCorner ? CORNER * 0.96 : TILE_D * 0.96;
+      marker.scale.x = targetW / marker.userData.baseW;
+      marker.scale.z = targetD / marker.userData.baseD;
+    }
+
+    _pulseMarker(marker) {
+      const start = performance.now();
+      const dur = 650;
+      const baseSx = marker.scale.x;
+      const baseSz = marker.scale.z;
+      const baseY  = marker.position.y;
+      const step = () => {
+        const t = Math.min(1, (performance.now() - start) / dur);
+        const grow = 1 + Math.sin(t * Math.PI) * 0.18;
+        marker.scale.x = baseSx * grow;
+        marker.scale.z = baseSz * grow;
+        marker.position.y = baseY + Math.sin(t * Math.PI) * 0.06;
+        if (t < 1) requestAnimationFrame(step);
+        else {
+          marker.scale.x = baseSx;
+          marker.scale.z = baseSz;
+          marker.position.y = baseY;
+        }
+      };
+      requestAnimationFrame(step);
     }
 
     // Animate a pawn from its current tile to a target tile, hopping tile-by-tile.
@@ -909,26 +1021,31 @@
       if (!team) return;
       const fromIdx = (opts && opts.fromIdx != null) ? opts.fromIdx : team.position;
       if (fromIdx === toIdx) return;
-      const totalPawns = teams.length;
 
       const run = (async () => {
         let cur = fromIdx;
         const total = window.TILES.length;
         while (cur !== toIdx) {
           cur = (cur + 1) % total;
-          await this._hopPawn(pawn, cur, teamIndex, totalPawns);
+          await this._hopPawn(pawn, cur, teamIndex, teams);
         }
       })();
       this._pawnAnim[teamId] = run;
       try {
         await run;
+        // Snap the team's tile marker to the new tile and pulse it for visibility.
+        const marker = this.tileMarkers && this.tileMarkers.get(teamId);
+        if (marker) {
+          this._snapMarkerToTile(marker, toIdx);
+          this._pulseMarker(marker);
+        }
       } finally {
         this._pawnAnim[teamId] = null;
       }
     }
 
-    _hopPawn(pawn, idx, pawnIndex, totalPawns) {
-      const spot = getPawnSpot(idx, pawnIndex, totalPawns);
+    _hopPawn(pawn, idx, pawnIndex, teams) {
+      const spot = getPawnSpot(idx, pawnIndex, teams);
       const from = { x: pawn.position.x, y: pawn.position.y, z: pawn.position.z, ry: pawn.rotation.y };
       const to = { x: spot.x, y: spot.y, z: spot.z, ry: spot.rotY };
       // unwrap rotation

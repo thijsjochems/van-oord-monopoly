@@ -43,8 +43,10 @@
   let modalQueue = [];
   let modalShowing = false;
   let mounted = false;
-  let mountCtx = { role: 'solo', myTeamId: null, sessionCode: null };
+  let mountCtx = { role: 'solo', myTeamId: null, sessionCode: null, mode: 'solo' };
   let endShown = false;
+  // Modes that should NOT show host-style admin controls (pause/reset/start)
+  const SPECTATOR_MODES = new Set(['demo', 'player']);
 
   // ============================================================================
   // Mount
@@ -52,7 +54,12 @@
   function mount(ctx) {
     if (mounted) return;
     mounted = true;
-    if (ctx) mountCtx = Object.assign({ role: 'solo', myTeamId: null, sessionCode: null }, ctx);
+    if (ctx) mountCtx = Object.assign({ role: 'solo', myTeamId: null, sessionCode: null, mode: 'solo' }, ctx);
+    // Spectator modes (demo / player) hide host-style admin controls so the
+    // page stops feeling like an admin panel.
+    if (SPECTATOR_MODES.has(mountCtx.mode)) {
+      document.body.classList.add('spectator');
+    }
     // resolve dom
     $top.code      = $('[data-role="session-code"]');
     $top.timerVal  = $('[data-role="timer-val"]');
@@ -325,8 +332,12 @@
     $footer.meterLbl.textContent = `Automation Meter · ${label}`;
   }
 
+  // Inline SVG silhouette for the excavator — unicode has no excavator emoji,
+  // and 🚜 (tractor) misrepresents the 3D pawn. Other pawns map cleanly to emoji.
+  const EXCAVATOR_SVG = '<svg viewBox="0 0 24 18" width="20" height="15" fill="currentColor" style="display:inline-block;vertical-align:-3px;"><rect x="2" y="13" width="14" height="3.5" rx="1.5"/><rect x="5" y="7.5" width="6" height="5.5" rx="0.5"/><path d="M11 9 L19 3 L21 5 L12.5 11 Z"/><path d="M19 3 L22.5 3 L22 6 L19.5 5 Z"/></svg>';
   function pawnEmoji(p) {
-    return ({ excavator: '🚜', ship: '🚢', truck: '🚛', dumptruck: '🪣', crane: '🏗️' })[p] || '⚙️';
+    if (p === 'excavator') return EXCAVATOR_SVG;
+    return ({ ship: '🚢', truck: '🚛', dumptruck: '🪣', crane: '🏗️' })[p] || '⚙️';
   }
   function pawnName(p) {
     return ({ excavator: 'Excavator', ship: 'Hopper dredger', truck: 'Truck', dumptruck: 'Dumptruck', crane: 'Heavy-lift crane' })[p] || 'Pawn';

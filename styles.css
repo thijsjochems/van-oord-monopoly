@@ -815,3 +815,10 @@ button { font-family: inherit; }
   .big-code { font-size: 64px; letter-spacing: 4px; }
   .team-cards { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ============================================================================
+   Spectator mode (?mode=demo or ?mode=player) — strip the admin chrome.
+   ============================================================================ */
+body.spectator .host-controls { display: none; }
+body.spectator .tweaks-toggle { display: none; }
+body.spectator .tweaks { display: none; }
