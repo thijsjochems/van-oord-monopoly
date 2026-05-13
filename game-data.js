@@ -102,15 +102,15 @@ window.QUESTIONS = {
     explanation: 'Shortcuts are bandaids. The real problem is that you redo the same work every month — that is automatable by definition. Set up Power BI once, benefit forever.',
   },
   'palm-deira': {
-    situation: 'Your project manager wants a forecast update. To produce it you need data from four systems: ERP, planning, time tracking and contract admin. Merging them takes you half a day.',
-    question: 'What do you fix structurally?',
+    situation: 'Palm Deira is back from hibernation: original 2008 scope, revised 2014, mothballed 2018, restart 2024. Three different reporting templates along the way, three different chart-of-accounts revisions. Senior management asks: "What is cumulative cost-to-date vs the original 2008 baseline?" The 2008 controller is retired.',
+    question: 'How do you reconstruct the picture?',
     options: [
-      { text: 'Block a fixed Friday slot for forecasts',                                                       correct: false },
-      { text: 'Ask the PM to give you more lead time',                                                         correct: false },
-      { text: 'Build a data link that pulls and merges the four sources, so a forecast takes 5 minutes',      correct: true  },
-      { text: 'Write an Excel macro that speeds up the copy-paste work',                                       correct: false },
+      { text: 'Read all historical reports yourself; reconcile manually',         correct: false },
+      { text: 'Track down the retired controller for context',                    correct: false },
+      { text: 'Have AI reconcile the historical reports to the 2008 baseline',    correct: true  },
+      { text: 'Reset to 2024 as the new baseline going forward',                  correct: false },
     ],
-    explanation: 'A macro on top of manual work is still manual work. The win is that you never copy again — the data comes to you.',
+    explanation: 'Messy historical data in inconsistent formats is the textbook AI use case. Your job is judgement on the edge cases — not pulling the data into one shape.',
   },
 
   // ---- DUTCH COASTAL HERITAGE (lightblue) ----
@@ -266,15 +266,15 @@ window.QUESTIONS = {
     explanation: 'The question is not "how do I answer faster", but "how do I make sure I am not the bottleneck". Self-service dashboards are the silent killer of last-minute questions.',
   },
   'hollandse-kust-noord': {
-    situation: 'You have 30 supplier invoices on your desk (read: in your inbox, as PDFs). Each one: check the amount, link to a PO, pick the right cost category, approve.',
-    question: 'How would you tackle this with AI?',
+    situation: 'Hollandse Kust Noord is operational. You run two Crew Transfer Vessels at €8k/day each. Weather windows for technician transfers are short and unpredictable — typically 4-6 useful hours per day, sometimes zero. Last winter you logged 47 standby-only days. CFO wants 20% off CTV cost this year.',
+    question: 'Where is the lever?',
     options: [
-      { text: 'Batch all the PDFs and run through them in one sitting',                                         correct: false },
-      { text: 'Ask the suppliers for Excel attachments instead',                                                correct: false },
-      { text: 'Let an AI tool read the PDFs, match against POs, and only flag the edge cases for your review', correct: true  },
-      { text: 'Ask a colleague to help out',                                                                    correct: false },
+      { text: 'Negotiate lower day rates with the CTV provider',                                          correct: false },
+      { text: 'Add a third CTV to spread the workload',                                                    correct: false },
+      { text: 'Use weather + tide + crew schedules + ML to predict productive days; schedule accordingly', correct: true  },
+      { text: 'Switch to helicopter transfers for time-critical jobs',                                     correct: false },
     ],
-    explanation: 'Option A is pedalling harder on a flat tyre. The idea: AI does the 80% (the matches), you only handle the 20% where you actually add value.',
+    explanation: '20% cost reduction is not a contract negotiation — it is a planning problem. ML on three data streams beats human gut feel on whether tomorrow is worth the sail.',
   },
 
   // ---- UK MAJOR WORKS (red) — added in batch 1 ----
