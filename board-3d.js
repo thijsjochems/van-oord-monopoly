@@ -145,12 +145,6 @@
     ctx.fillRect(0, 0, canvas.width, 6);
     ctx.fillRect(0, canvas.height - 6, canvas.width, 6);
 
-    if (options.stars) {
-      ctx.fillStyle = textColor;
-      ctx.font = 'bold 28px "JetBrains Mono", monospace';
-      ctx.textAlign = 'right';
-      ctx.fillText('★'.repeat(options.stars), canvas.width - 24, 42);
-    }
     if (options.placeholder) {
       ctx.fillStyle = textColor;
       ctx.font = 'bold 28px "JetBrains Mono", monospace';
@@ -300,7 +294,6 @@
       // Per-tile `country` overrides the group default, so e.g. Millport can
       // show "Scotland" instead of the group's "United Kingdom".
       const tex = makeLabelTexture(tile.name, group.color, group.text || '#0E1A22', {
-        stars: tile.stars,
         placeholder: tile.placeholder,
         subtitle: tile.country || group.countries,
       });

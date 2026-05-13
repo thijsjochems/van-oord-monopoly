@@ -16,8 +16,8 @@ window.GROUPS = {
   pink:      { name: 'Dubai Islands',           countries: 'United Arab Emirates',       color: '#D9398B', dark: '#6A1846', text: '#FFFFFF' },
   orange:    { name: 'Dutch Offshore Wind',     countries: 'Netherlands',                color: '#F7941D', dark: '#7A4209', text: '#1B0903' },
   red:       { name: 'UK Major Works',          countries: 'United Kingdom',             color: '#ED1B24', dark: '#6A0810', text: '#FFFFFF' },
-  yellow:    { name: 'North-Sea & Baltic Wind', countries: 'Belgium · Denmark · Poland', color: '#F8D300', dark: '#7A6800', text: '#1B1306' },
-  green:     { name: 'Emerging Markets',        countries: 'Egypt · Singapore · Taiwan', color: '#1FB25A', dark: '#0A4A22', text: '#FFFFFF' },
+  yellow:    { name: 'Egyptian Marine Works',   countries: 'Egypt',                      color: '#F8D300', dark: '#7A6800', text: '#1B1306' },
+  green:     { name: 'Singapore Reclamation',   countries: 'Singapore',                  color: '#1FB25A', dark: '#0A4A22', text: '#FFFFFF' },
   darkblue:  { name: 'Dutch Megaprojects',      countries: 'Netherlands',                color: '#0072BB', dark: '#003860', text: '#FFFFFF' },
 };
 
@@ -26,51 +26,51 @@ window.GROUPS = {
 window.TILES = [
   /* 0  */ { type: 'corner-start', name: 'GO' },
 
-  /* 1  */ { type: 'project',    id: 'millport',              name: 'Millport',                 group: 'brown',     stars: 1, archetype: 'lighthouse', country: 'Scotland' },
+  /* 1  */ { type: 'project',    id: 'millport',              name: 'Millport',                 group: 'brown',     archetype: 'lighthouse',     country: 'Scotland' },
   /* 2  */ { type: 'briefing',   name: 'Project Briefing' },
-  /* 3  */ { type: 'project',    id: 'lincolnshire',          name: 'Lincolnshire Coast',       group: 'brown',     stars: 2, archetype: 'rock-armor' },
+  /* 3  */ { type: 'project',    id: 'lincolnshire',          name: 'Lincolnshire Coast',       group: 'brown',     archetype: 'rock-armor' },
   /* 4  */ { type: 'manual',     name: 'Manual Work' },
   /* 5  */ { type: 'fuel',       name: 'Fuel Station' },
-  /* 6  */ { type: 'project',    id: 'oosterscheldekering',   name: 'Oosterscheldekering',      group: 'lightblue', stars: 1, archetype: 'storm-barrier' },
+  /* 6  */ { type: 'project',    id: 'oosterscheldekering',   name: 'Oosterscheldekering',      group: 'lightblue', archetype: 'storm-barrier' },
   /* 7  */ { type: 'briefing',   name: 'Project Briefing' },
-  /* 8  */ { type: 'project',    id: 'afsluitdijk',           name: 'Afsluitdijk',              group: 'lightblue', stars: 2, archetype: 'storm-barrier' },
-  /* 9  */ { type: 'project',    id: 'marker-wadden',         name: 'Marker Wadden',            group: 'lightblue', stars: 2, archetype: 'archipelago' },
+  /* 8  */ { type: 'project',    id: 'afsluitdijk',           name: 'Afsluitdijk',              group: 'lightblue', archetype: 'storm-barrier' },
+  /* 9  */ { type: 'project',    id: 'marker-wadden',         name: 'Marker Wadden',            group: 'lightblue', archetype: 'archipelago' },
 
   /* 10 */ { type: 'corner-freeze', name: 'Budget Freeze' },
 
-  /* 11 */ { type: 'project',    id: 'palm-deira',            name: 'Palm Deira',               group: 'pink',      stars: 2, archetype: 'palm-single' },
+  /* 11 */ { type: 'project',    id: 'palm-deira',            name: 'Palm Deira',               group: 'pink',      archetype: 'palm-single' },
   /* 12 */ { type: 'automation', name: 'Automation Hub' },
-  /* 13 */ { type: 'project',    id: 'the-world-islands',     name: 'The World Islands',        group: 'pink',      stars: 2, archetype: 'archipelago' },
-  /* 14 */ { type: 'project',    id: 'palm-jumeirah',         name: 'Palm Jumeirah',            group: 'pink',      stars: 3, archetype: 'palm-cluster' },
+  /* 13 */ { type: 'project',    id: 'the-world-islands',     name: 'The World Islands',        group: 'pink',      archetype: 'archipelago' },
+  /* 14 */ { type: 'project',    id: 'palm-jumeirah',         name: 'Palm Jumeirah',            group: 'pink',      archetype: 'palm-cluster' },
   /* 15 */ { type: 'fuel',       name: 'Fuel Station' },
-  /* 16 */ { type: 'project',    id: 'egmond-aan-zee',        name: 'Egmond aan Zee (OWEZ)',    group: 'orange',    stars: 1, archetype: 'wind-farm-2' },
+  /* 16 */ { type: 'project',    id: 'egmond-aan-zee',        name: 'Egmond aan Zee',           group: 'orange',    archetype: 'wind-farm-2' },
   /* 17 */ { type: 'briefing',   name: 'Project Briefing' },
-  /* 18 */ { type: 'project',    id: 'princess-amalia',       name: 'Princess Amalia (Q7)',     group: 'orange',    stars: 2, archetype: 'wind-farm-2' },
-  /* 19 */ { type: 'project',    id: 'borssele',              name: 'Borssele III & IV',        group: 'orange',    stars: 3, archetype: 'wind-farm-3' },
+  /* 18 */ { type: 'project',    id: 'princess-amalia',       name: 'Princess Amalia',          group: 'orange',    archetype: 'wind-farm-2' },
+  /* 19 */ { type: 'project',    id: 'borssele',              name: 'Borssele III & IV',        group: 'orange',    archetype: 'wind-farm-3' },
 
   /* 20 */ { type: 'corner-contingency', name: 'Contingency Reserve' },
 
-  /* 21 */ { type: 'project',    id: 'broomhill-sands',       name: 'Broomhill Sands',          group: 'red',       stars: 2, archetype: 'rock-armor' },
+  /* 21 */ { type: 'project',    id: 'broomhill-sands',       name: 'Broomhill Sands',          group: 'red',       archetype: 'rock-armor' },
   /* 22 */ { type: 'briefing',   name: 'Project Briefing' },
-  /* 23 */ { type: 'project',    id: 'aberdeen-south',        name: 'Aberdeen South Harbour',   group: 'red',       stars: 2, archetype: 'rock-armor' },
-  /* 24 */ { type: 'project',    id: 'sofia-offshore-wind',   name: 'Sofia Wind Farm',          group: 'red',       stars: 3, archetype: 'wind-farm-3' },
+  /* 23 */ { type: 'project',    id: 'aberdeen-south',        name: 'Aberdeen Harbour',         group: 'red',       archetype: 'rock-armor' },
+  /* 24 */ { type: 'project',    id: 'sofia-offshore-wind',   name: 'Sofia Wind Farm',          group: 'red',       archetype: 'wind-farm-3' },
   /* 25 */ { type: 'fuel',       name: 'Fuel Station' },
-  /* 26 */ { type: 'project',    id: 'norther',               name: 'Norther (Belgium)',        group: 'yellow',    stars: 2, archetype: 'wind-farm-2' },
-  /* 27 */ { type: 'project',    id: 'kriegers-flak',         name: 'Kriegers Flak (DK)',       group: 'yellow',    stars: 2, archetype: 'wind-farm-2' },
+  /* 26 */ { type: 'project',    id: 'ain-sokhna',            name: 'Ain Sokhna',               group: 'yellow',    archetype: 'container-port' },
+  /* 27 */ { type: 'project',    id: 'suez-canal-expansion',  name: 'Suez Canal',               group: 'yellow',    archetype: 'canal-ship' },
   /* 28 */ { type: 'automation', name: 'Automation Hub' },
-  /* 29 */ { type: 'project',    id: 'baltica-2',             name: 'Baltica 2 (Poland)',       group: 'yellow',    stars: 3, archetype: 'wind-farm-3' },
+  /* 29 */ { type: 'project',    id: 'damietta-port',         name: 'Damietta Port',            group: 'yellow',    archetype: 'port-crane' },
 
   /* 30 */ { type: 'corner-go-freeze', name: 'Go to Budget Freeze' },
 
-  /* 31 */ { type: 'project',    id: 'greater-changhua',      name: 'Greater Changhua (TW)',    group: 'green',     stars: 2, archetype: 'wind-farm-3' },
-  /* 32 */ { type: 'project',    id: 'ain-sokhna',            name: 'Ain Sokhna',               group: 'green',     stars: 3, archetype: 'canal-ship' },
+  /* 31 */ { type: 'project',    id: 'pulau-tekong',          name: 'Pulau Tekong',             group: 'green',     archetype: 'archipelago' },
+  /* 32 */ { type: 'project',    id: 'tuas-mega-port',        name: 'Tuas Mega Port',           group: 'green',     archetype: 'port-crane' },
   /* 33 */ { type: 'briefing',   name: 'Project Briefing' },
-  /* 34 */ { type: 'project',    id: 'tuas-mega-port',        name: 'Tuas Mega Port',           group: 'green',     stars: 3, archetype: 'port-crane' },
+  /* 34 */ { type: 'project',    id: 'tuas-phase-2',          name: 'Tuas Phase 2',             group: 'green',     archetype: 'container-port' },
   /* 35 */ { type: 'fuel',       name: 'Fuel Station' },
   /* 36 */ { type: 'briefing',   name: 'Project Briefing' },
-  /* 37 */ { type: 'project',    id: 'maasvlakte-2',          name: 'Maasvlakte 2',             group: 'darkblue',  stars: 3, archetype: 'container-port' },
+  /* 37 */ { type: 'project',    id: 'maasvlakte-2',          name: 'Maasvlakte 2',             group: 'darkblue',  archetype: 'container-port' },
   /* 38 */ { type: 'manual',     name: 'Manual Work' },
-  /* 39 */ { type: 'project',    id: 'hollandse-kust-noord',  name: 'Hollandse Kust Noord',     group: 'darkblue',  stars: 3, archetype: 'wind-farm-3' },
+  /* 39 */ { type: 'project',    id: 'hollandse-kust-noord',  name: 'Hollandse Kust Noord',     group: 'darkblue',  archetype: 'wind-farm-3' },
 ];
 
 // ============================================================================
@@ -218,39 +218,39 @@ window.QUESTIONS = {
     explanation: 'AI does not replace your judgement. It replaces the digging that precedes it. Get the structure out first; you go in on top of it.',
   },
 
-  // ---- NORTH-SEA & BALTIC WIND (yellow) ----
-  'norther': {
-    situation: 'Norther is the offshore wind farm you and Engie own together. Both partners produce monthly cost reports. Yours from IFS, theirs from their own template. Consolidating both into the joint board pack eats the full first week of every month. The board sees numbers when the project is already in mid-month. Every steering decision is two weeks late.',
-    question: 'What unblocks this?',
+  // ---- EGYPTIAN MARINE WORKS (yellow) ----
+  'ain-sokhna': {
+    situation: 'Ain Sokhna is a 14-month reclamation contract on the Suez side, USD-denominated. Local subcontractors invoice in EGP, and your milestone payments convert at the actual transfer date. On your last Egyptian project the pound devalued 22% mid-contract. You absorbed €1.4M unhedged. Treasury wants earlier visibility this time.',
+    question: 'Where do you put your effort?',
     options: [
-      { text: 'Push the board meeting back a week so consolidation has more runway',                correct: false },
-      { text: 'Hire a junior controller dedicated to the first-week consolidation work',            correct: false },
-      { text: 'Automate the consolidation; pack ready Monday week 1',                                correct: true  },
-      { text: 'Negotiate a unified reporting template with Engie',                                   correct: false },
+      { text: 'Hedge the full contract value upfront with a 12-month forward',                            correct: false },
+      { text: 'Set a treasury alert when EGP/USD exposure crosses €100k',                                 correct: true  },
+      { text: 'Have the PM chase faster milestone sign-offs every month',                                 correct: false },
+      { text: 'Switch your local subcontractors to USD invoicing so they carry the FX risk',              correct: false },
     ],
-    explanation: 'Consolidation is not your value-add. Analysis is. The board needs numbers fresh, not perfect. Automate the input, get back the first week of the month.',
+    explanation: 'Hedging is one tool. The controllable variable is time-to-cash. That is a dashboard problem, not a treasury problem. The €1.4M last time was a visibility miss, not a hedging miss.',
   },
-  'kriegers-flak': {
-    situation: 'The Danish energy ministry wants cost reports in their own format. Different from what your ERP exports. Someone retypes the numbers into the client template every month, plus DKK conversion logic on top. Last quarter the client added two new disclosure fields to their template. You propagated the change manually.',
-    question: 'Smartest solution?',
+  'suez-canal-expansion': {
+    situation: 'New Suez Canal program. The Egyptian government wants 35 km of new channel dredged in 12 months. Six contractors run in parallel, your fleet works 24/7 across two sections. Daily progress reports go to Cairo. Each dredger logs production manually, gets typed into a master spreadsheet, gets emailed up. Cairo sees numbers 36 hours stale.',
+    question: 'How do you give the client real-time visibility?',
     options: [
-      { text: 'Convince the client to accept your standard format',                            correct: false },
-      { text: 'Build a conversion script: ERP export in, client template out',                 correct: true  },
-      { text: 'Have IFS customised to export directly in the client format',                   correct: false },
-      { text: 'Hire a junior dedicated to the monthly transcription',                          correct: false },
+      { text: 'Daily WhatsApp summary from each dredger captain',                              correct: false },
+      { text: 'Pipe dredger telemetry into a shared dashboard the client can open',            correct: true  },
+      { text: 'Add a second admin assistant in the project office',                            correct: false },
+      { text: 'Switch to weekly summaries instead of daily',                                   correct: false },
     ],
-    explanation: 'External clients do not adapt to you. That is a given. Two ways to embrace their requirement: customise your ERP (slow, expensive, fragile) or own a small translation script (yours to control). Pick the one you control.',
+    explanation: 'Daily reports lag. Live dashboards do not. When the client sees the same numbers you see, you stop having to defend them.',
   },
-  'baltica-2': {
-    situation: 'At Baltica 2 kick-off the clock stands still while you set up the financial structure. The PM team is waiting on you: chart of accounts, cost categories, dashboards, first forecast. It takes you two weeks.',
-    question: 'How can this be faster on the next project?',
+  'damietta-port': {
+    situation: 'Damietta port on the Egyptian Mediterranean coast. You maintain the access channel: every 18 months you mobilise a dredger to remove ~2M m³ of accumulated sediment. The infill rate is highly variable. Some years 1.5M m³, some years 3M. The client pays per m³ removed. Over-mob (dredger arrives, finds little to remove) and under-mob (sediment chokes the channel, ships divert) are both your loss.',
+    question: 'How do you cut both risks at once?',
     options: [
-      { text: 'Block two weeks at the start of every new project as standard',                       correct: false },
-      { text: 'Start earlier. Before the contract is signed',                                        correct: false },
-      { text: 'Build a reusable startup pack. Template BV, default dashboards, standard categories', correct: true  },
-      { text: 'Assign a second project controller to the kick-off',                                   correct: false },
+      { text: 'Mobilise on a strict 18-month cycle regardless of conditions',                            correct: false },
+      { text: 'Use historic survey data + tide and storm models to predict infill, mobilise to need',    correct: true  },
+      { text: 'Negotiate a fixed-fee maintenance contract instead of pay-per-m³',                       correct: false },
+      { text: 'Stop offering maintenance dredging',                                                     correct: false },
     ],
-    explanation: 'Every big Van Oord project gets its own BV. Starting from zero each time is structural waste. A startup pack is not a luxury. It is a productivity multiplier.',
+    explanation: 'Predictability is not the same as a fixed schedule. The data you collect already can tell you when mobilisation is actually needed. That is the line between profit and loss on a maintenance contract.',
   },
 
   // ---- DUTCH MEGAPROJECTS (darkblue) ----
@@ -302,29 +302,17 @@ window.QUESTIONS = {
     explanation: 'A vision system never gets tired at hour 50. Surveyors stay in the loop where they add value, judging the borderline ones instead of measuring the obvious ones.',
   },
 
-  // ---- EMERGING MARKETS (green). Added in batch 1 ----
-  'greater-changhua': {
-    situation: 'Greater Changhua is your second offshore wind project for Ørsted. 100+ monopile foundations across a 30 km² field. Each install generates a 60-page report: pile verticality, penetration depth, position offset, hammer-energy log, soil resistance. The design team in Rotterdam manually cross-checks each report against the design tolerance spec (also 60 pages). Two engineers full-time, one report a day each.',
-    question: 'What changes the math here?',
+  // ---- SINGAPORE RECLAMATION (green) ----
+  'pulau-tekong': {
+    situation: 'Pulau Tekong is Singapore\'s first polder reclamation. Van Oord brought the Dutch polder method to Singapore. Local engineers from JTC and your subcontractors all need to learn how it works. The Dutch design has to be adapted for tropical conditions: warmer water, monsoon storms, different sediment. Two senior Dutch engineers are on site, but they rotate out in 18 months.',
+    question: 'How do you make the knowledge stick?',
     options: [
-      { text: 'Add a third engineer in Rotterdam to clear the backlog',                          correct: false },
-      { text: 'Auto-compare each install report against the spec; flag only deviations',         correct: true  },
-      { text: 'Move the design tolerance spec into a structured database for easier lookup',     correct: false },
-      { text: 'Skip the cross-check on installs that visibly look fine on inspection',           correct: false },
+      { text: 'Send the Dutch engineers permanently on site',                                                                          correct: false },
+      { text: 'Run a 2-week intensive training course at project kick-off',                                                            correct: false },
+      { text: 'Build a structured knowledge base: design rationale, tropical adaptations, decisions log, accessible to both teams',   correct: true  },
+      { text: 'Translate the original Dutch polder manual into English',                                                              correct: false },
     ],
-    explanation: 'The compliance check is dumb work. The judgement call on a deviation is engineering work. AI takes the first hour of the engineer\'s day; you spend the next two on the items that matter.',
-  },
-
-  'ain-sokhna': {
-    situation: 'Ain Sokhna is a 14-month reclamation contract on the Suez side, USD-denominated. Local subcontractors invoice in EGP, and your milestone payments convert at the actual transfer date. On your last Egyptian project the pound devalued 22% mid-contract. You absorbed €1.4M unhedged. Treasury wants earlier visibility this time.',
-    question: 'Where do you put your effort?',
-    options: [
-      { text: 'Hedge the full contract value upfront with a 12-month forward',                            correct: false },
-      { text: 'Set a treasury alert when EGP/USD exposure crosses €100k',                                 correct: true  },
-      { text: 'Have the PM chase faster milestone sign-offs every month',                                 correct: false },
-      { text: 'Switch your local subcontractors to USD invoicing so they carry the FX risk',              correct: false },
-    ],
-    explanation: 'Hedging is one tool. The controllable variable is time-to-cash. That is a dashboard problem, not a treasury problem. The €1.4M last time was a visibility miss, not a hedging miss.',
+    explanation: 'A 2-week training fades. A live knowledge base updates as you encounter new conditions. Knowledge transfer is a system, not an event.',
   },
 
   'tuas-mega-port': {
@@ -337,6 +325,18 @@ window.QUESTIONS = {
       { text: 'Push back on PSA to reduce the number of change orders',                         correct: false },
     ],
     explanation: '1,400 changes in three years is not a junior\'s job. It is a system\'s job. Free the seniors to make the commercial calls; the seniors are the ones the client actually pays for.',
+  },
+
+  'tuas-phase-2': {
+    situation: 'Tuas Phase 2 starts in 12 months. Phase 1 is in year 5 of construction. Your team has hard-earned knowledge: which subcontractors over-promised, which ground conditions caught you off-guard, what should be in the Phase 2 contract from day one. None of this lives anywhere structured. It is in the heads of the Phase 1 controllers. Two of them retire next year.',
+    question: 'How do you not lose this when Phase 2 starts?',
+    options: [
+      { text: 'Schedule a one-day handover session before Phase 2 kick-off',                                              correct: false },
+      { text: 'Build a structured Phase 1 lessons-learned database (commercial / technical / HSE) to seed Phase 2',       correct: true  },
+      { text: 'Make sure Phase 2 hires shadow Phase 1 staff for two weeks',                                               correct: false },
+      { text: 'Trust that Phase 2 will figure it out from the as-built documents',                                        correct: false },
+    ],
+    explanation: 'Knowledge transfer is a structure problem, not a meeting problem. A handover session evaporates within weeks. A categorised lessons-learned database becomes the contract template for Phase 3.',
   },
 
   // ---- placeholder for projects without a specific question yet ----

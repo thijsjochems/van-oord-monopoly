@@ -672,11 +672,10 @@
 
     let answered = false;
 
-    const stars = '★'.repeat(tile.stars) + '☆'.repeat(3 - tile.stars);
     wrap.innerHTML = `
       <div class="modal-head">
         <div>
-          <div class="eye">${group.name} · ${stars}${isPlaceholder ? ' · 🚧' : ''}</div>
+          <div class="eye">${group.name}${isPlaceholder ? ' · 🚧' : ''}</div>
           <div class="title">${tile.name}</div>
         </div>
         <div style="font-family:var(--t-display);font-weight:900;font-size:28px;color:${group.text || '#0E1A22'};opacity:0.7;">${team.name}</div>
