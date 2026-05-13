@@ -50,9 +50,9 @@ window.TILES = [
 
   /* 20 */ { type: 'corner-contingency', name: 'Contingency Reserve' },
 
-  /* 21 */ { type: 'project',    id: 'broomhill-sands',       name: 'Broomhill Sands',          group: 'red',       stars: 2, archetype: 'rock-armor',    placeholder: true },
+  /* 21 */ { type: 'project',    id: 'broomhill-sands',       name: 'Broomhill Sands',          group: 'red',       stars: 2, archetype: 'rock-armor' },
   /* 22 */ { type: 'briefing',   name: 'Project Briefing' },
-  /* 23 */ { type: 'project',    id: 'aberdeen-south',        name: 'Aberdeen South Harbour',   group: 'red',       stars: 2, archetype: 'rock-armor',    placeholder: true },
+  /* 23 */ { type: 'project',    id: 'aberdeen-south',        name: 'Aberdeen South Harbour',   group: 'red',       stars: 2, archetype: 'rock-armor' },
   /* 24 */ { type: 'project',    id: 'sofia-offshore-wind',   name: 'Sofia Wind Farm',          group: 'red',       stars: 3, archetype: 'wind-farm-3' },
   /* 25 */ { type: 'fuel',       name: 'Fuel Station' },
   /* 26 */ { type: 'project',    id: 'norther',               name: 'Norther (Belgium)',        group: 'yellow',    stars: 2, archetype: 'wind-farm-2' },
@@ -62,10 +62,10 @@ window.TILES = [
 
   /* 30 */ { type: 'corner-go-freeze', name: 'Go to Budget Freeze' },
 
-  /* 31 */ { type: 'project',    id: 'greater-changhua',      name: 'Greater Changhua (TW)',    group: 'green',     stars: 2, archetype: 'wind-farm-3', placeholder: true },
-  /* 32 */ { type: 'project',    id: 'ain-sokhna',            name: 'Ain Sokhna',               group: 'green',     stars: 3, archetype: 'canal-ship',   placeholder: true },
+  /* 31 */ { type: 'project',    id: 'greater-changhua',      name: 'Greater Changhua (TW)',    group: 'green',     stars: 2, archetype: 'wind-farm-3' },
+  /* 32 */ { type: 'project',    id: 'ain-sokhna',            name: 'Ain Sokhna',               group: 'green',     stars: 3, archetype: 'canal-ship' },
   /* 33 */ { type: 'briefing',   name: 'Project Briefing' },
-  /* 34 */ { type: 'project',    id: 'tuas-mega-port',        name: 'Tuas Mega Port',           group: 'green',     stars: 3, archetype: 'port-crane',   placeholder: true },
+  /* 34 */ { type: 'project',    id: 'tuas-mega-port',        name: 'Tuas Mega Port',           group: 'green',     stars: 3, archetype: 'port-crane' },
   /* 35 */ { type: 'fuel',       name: 'Fuel Station' },
   /* 36 */ { type: 'briefing',   name: 'Project Briefing' },
   /* 37 */ { type: 'project',    id: 'maasvlakte-2',          name: 'Maasvlakte 2',             group: 'darkblue',  stars: 3, archetype: 'container-port' },
@@ -275,6 +275,68 @@ window.QUESTIONS = {
       { text: 'Ask a colleague to help out',                                                                    correct: false },
     ],
     explanation: 'Option A is pedalling harder on a flat tyre. The idea: AI does the 80% (the matches), you only handle the 20% where you actually add value.',
+  },
+
+  // ---- UK MAJOR WORKS (red) — added in batch 1 ----
+  'broomhill-sands': {
+    situation: 'Broomhill Sands pays per m³ of sand placed on the beach. The Environment Agency surveys before and after; you survey too. The two surveys never agree exactly — usually within 2%, occasionally 6%. On a £14M contract a 2% gap is £280k. The EA\'s hydrographic surveyor disputes your bathymetric data classification on every milestone.',
+    question: 'What ends the dispute cycle?',
+    options: [
+      { text: 'Send your raw survey data to the EA each month for them to verify',                              correct: false },
+      { text: 'Hire a third-party surveyor to act as referee',                                                  correct: false },
+      { text: 'Process both surveys through one AI-assisted analysis — every discrepancy traced to its grid cell', correct: true  },
+      { text: 'Accept their numbers to keep the relationship sweet',                                            correct: false },
+    ],
+    explanation: 'Disputes survive in the gap between two opinions. Eliminate the gap: same data, same processing, same conclusion. Whoever owns the explanation owns the outcome.',
+  },
+
+  'aberdeen-south': {
+    situation: 'Aberdeen South Harbour breakwater consumes 1.4M tonnes of armour rock. Each truck delivery from the quarry must meet spec: weight per piece (3–8 tonnes), gradation, density. Your QC engineer at the quay measures roughly 15% by hand-held device — passing rock goes into the structure, failing rock goes back. Two surveyors clock 60-hour weeks. Quarry is supplying ~20 truckloads a day.',
+    question: 'How do you keep the breakwater on spec without burning out the surveyors?',
+    options: [
+      { text: 'Add a third QC surveyor',                                                       correct: false },
+      { text: 'Mount AI vision at the unloading bay; surveyors review only the failures',     correct: true  },
+      { text: 'Trust the quarry\'s certificates and move to spot checks only',                correct: false },
+      { text: 'Accept rocks within 90% of spec to keep the line moving',                      correct: false },
+    ],
+    explanation: 'A vision system never gets tired at hour 50. Surveyors stay in the loop where they add value — judging the borderline ones — instead of measuring the obvious ones.',
+  },
+
+  // ---- EMERGING MARKETS (green) — added in batch 1 ----
+  'greater-changhua': {
+    situation: 'Greater Changhua is your second offshore wind project for Ørsted — 100+ monopile foundations across a 30 km² field. Each install generates a 60-page report: pile verticality, penetration depth, position offset, hammer-energy log, soil resistance. The design team in Rotterdam manually cross-checks each report against the design tolerance spec (also 60 pages). Two engineers full-time, one report a day each.',
+    question: 'What changes the math here?',
+    options: [
+      { text: 'Add a third engineer in Rotterdam to clear the backlog',                          correct: false },
+      { text: 'Auto-compare each install report against the spec; flag only deviations',         correct: true  },
+      { text: 'Move the design tolerance spec into a structured database for easier lookup',     correct: false },
+      { text: 'Skip the cross-check on installs that visibly look fine on inspection',           correct: false },
+    ],
+    explanation: 'The compliance check is dumb work. The judgement call on a deviation is engineering work. AI takes the first hour of the engineer\'s day; you spend the next two on the items that matter.',
+  },
+
+  'ain-sokhna': {
+    situation: 'Ain Sokhna is a 14-month reclamation contract on the Suez side, USD-denominated. Local subcontractors invoice in EGP, and your milestone payments convert at the actual transfer date. On your last Egyptian project the pound devalued 22% mid-contract — you absorbed €1.4M unhedged. Treasury wants earlier visibility this time.',
+    question: 'Where do you put your effort?',
+    options: [
+      { text: 'Hedge the full contract value upfront with a 12-month forward',                            correct: false },
+      { text: 'Set a treasury alert when EGP/USD exposure crosses €100k',                                 correct: true  },
+      { text: 'Have the PM chase faster milestone sign-offs every month',                                 correct: false },
+      { text: 'Switch your local subcontractors to USD invoicing so they carry the FX risk',              correct: false },
+    ],
+    explanation: 'Hedging is one tool. The controllable variable is time-to-cash — that is a dashboard problem, not a treasury problem. The €1.4M last time was a visibility miss, not a hedging miss.',
+  },
+
+  'tuas-mega-port': {
+    situation: 'Tuas is a 25-year programme in 5 phases. By year 3 you are sitting on 1,400 change orders — design tweaks from PSA Singapore, consortium partner requests, regulatory updates. Each change goes through: technical impact → cost re-estimate → commercial agreement → ERP booking. Your two junior controllers in Rotterdam are six weeks behind on the booking step.',
+    question: 'What changes the bottleneck?',
+    options: [
+      { text: 'Hire a third junior to clear the backlog',                                       correct: false },
+      { text: 'AI agent does classification + cost draft; seniors do the commercial decisions', correct: true  },
+      { text: 'Switch to weekly batch processing of changes',                                   correct: false },
+      { text: 'Push back on PSA to reduce the number of change orders',                         correct: false },
+    ],
+    explanation: '1,400 changes in three years is not a junior\'s job — it is a system\'s job. Free the seniors to make the commercial calls; the seniors are the ones the client actually pays for.',
   },
 
   // ---- placeholder for projects without a specific question yet ----
