@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Briefing — Van Oord · Automate or Sink</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=Albert+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================================
+       Self-contained briefing — open in a browser, Cmd/Ctrl+P → Save as PDF.
+       A4 portrait. Tuned to fit on a single page in Chrome/Edge with default
+       margins set to "None" or "Minimum" in the print dialog.
+       ============================================================================ */
+    :root {
+      --ink: #0E1A22;
+      --ink-soft: #455565;
+      --ink-faint: #7A8896;
+      --line: #DDE3E8;
+      --vo-navy: #002859;
+      --vo-yellow: #FFCD00;
+      --ad-green: #54fcbc;
+      --ad-green-dark: #1F9D6F;
+      --t-display: 'Archivo', sans-serif;
+      --t-body: 'Albert Sans', system-ui, sans-serif;
+      --t-mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #f3f4f6; }
+    body { font-family: var(--t-body); color: var(--ink); }
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #fff;
+      margin: 16px auto;
+      padding: 16mm 18mm 14mm;
+      box-shadow: 0 4px 24px rgba(14, 26, 34, 0.08);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ============================================================================
+       Header — Van Oord wordmark (left) + AD logotype (right)
+       ============================================================================ */
+    header.briefing-head {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 16px;
+    }
+    .vo-mark {
+      font-family: var(--t-display);
+      font-weight: 900;
+      font-size: 28px;
+      letter-spacing: -0.5px;
+      color: var(--vo-navy);
+      line-height: 1;
+      position: relative;
+      padding-bottom: 4px;
+    }
+    .vo-mark::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: -2px;
+      height: 3px; background: var(--vo-yellow);
+    }
+    .ad-mark {
+      height: 22px;
+      display: flex; align-items: center;
+    }
+    .ad-mark svg { height: 22px; width: auto; }
+
+    /* ============================================================================
+       Title block
+       ============================================================================ */
+    .title-block { margin-bottom: 18px; }
+    .title-eye {
+      font-family: var(--t-mono);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ad-green-dark);
+      margin-bottom: 6px;
+    }
+    .title-block h1 {
+      font-family: var(--t-display);
+      font-weight: 900;
+      font-size: 42px;
+      letter-spacing: -1.5px;
+      color: var(--ink);
+      line-height: 1;
+      margin: 0;
+    }
+    .title-block .sub {
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--ink-soft);
+    }
+
+    /* ============================================================================
+       Section headers + body
+       ============================================================================ */
+    h2.sec {
+      font-family: var(--t-display);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--vo-navy);
+      margin: 16px 0 6px;
+      padding-bottom: 4px;
+      border-bottom: 1.5px solid var(--ink);
+    }
+    h2.sec:first-of-type { margin-top: 0; }
+    p, ol, ul {
+      font-size: 11.5px;
+      line-height: 1.55;
+      margin: 6px 0;
+      color: var(--ink);
+    }
+    p strong, li strong { color: var(--ink); }
+    .em { font-style: italic; }
+
+    /* Two-column layout for goal block */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 4px;
+    }
+    .two-col .col h3 {
+      font-family: var(--t-display); font-weight: 800;
+      font-size: 13px; margin: 0 0 4px;
+      color: var(--vo-navy);
+    }
+    .two-col .col p { margin: 0; }
+
+    /* Priority themes list */
+    ol.themes {
+      list-style: none; padding: 0; margin: 4px 0;
+      counter-reset: theme;
+    }
+    ol.themes li {
+      counter-increment: theme;
+      position: relative;
+      padding: 6px 0 6px 36px;
+      border-bottom: 1px dashed var(--line);
+      font-size: 11.5px;
+      line-height: 1.45;
+    }
+    ol.themes li:last-child { border-bottom: none; }
+    ol.themes li::before {
+      content: counter(theme);
+      position: absolute; left: 0; top: 6px;
+      width: 24px; height: 24px;
+      background: var(--vo-yellow);
+      color: var(--vo-navy);
+      font-family: var(--t-display); font-weight: 900;
+      font-size: 13px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+    }
+    ol.themes li b {
+      font-family: var(--t-display); font-weight: 800;
+      color: var(--vo-navy);
+    }
+
+    /* Take-away callout */
+    .takeaway {
+      margin: 14px 0;
+      padding: 16px 20px;
+      background: var(--vo-navy);
+      color: #fff;
+      border-left: 6px solid var(--vo-yellow);
+      font-family: var(--t-display);
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+    .takeaway .lbl {
+      display: block;
+      font-family: var(--t-mono); font-size: 9px;
+      font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--vo-yellow);
+      margin-bottom: 4px;
+    }
+
+    /* Practical table */
+    table.practical {
+      width: 100%; border-collapse: collapse; margin-top: 4px;
+      font-size: 11px;
+    }
+    table.practical td {
+      padding: 4px 8px; border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    table.practical td.k {
+      width: 35%; font-family: var(--t-mono);
+      font-size: 10px; color: var(--ink-soft);
+      letter-spacing: 0.5px;
+    }
+    table.practical td.v {
+      font-family: var(--t-mono);
+      color: var(--ink);
+    }
+
+    /* Follow-up bullets */
+    ul.followup { list-style: none; padding: 0; margin: 6px 0; }
+    ul.followup li {
+      padding: 4px 0 4px 16px;
+      position: relative;
+      font-size: 11.5px;
+    }
+    ul.followup li::before {
+      content: '▸'; position: absolute; left: 0; top: 4px;
+      color: var(--ad-green-dark); font-weight: 700;
+    }
+
+    /* Footer */
+    footer.briefing-foot {
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--t-mono);
+      font-size: 9px;
+      color: var(--ink-faint);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================================
+       Print rules — Cmd/Ctrl+P → Save as PDF
+       ============================================================================ */
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+    @media print {
+      html, body { background: #fff; }
+      .page {
+        margin: 0; box-shadow: none;
+        width: 210mm; min-height: 297mm;
+      }
+      /* Hide the print hint when actually printing */
+      .print-hint { display: none !important; }
+    }
+
+    /* On-screen helper */
+    .print-hint {
+      position: fixed;
+      bottom: 14px; right: 14px;
+      background: var(--vo-navy); color: #fff;
+      padding: 10px 14px;
+      font-family: var(--t-mono); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+      border-radius: 4px;
+      z-index: 99;
+      cursor: pointer;
+    }
+    .print-hint:hover { background: #003d80; }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="briefing-head">
+    <div class="vo-mark">VAN&nbsp;OORD</div>
+    <div class="ad-mark" aria-label="Another Dimension">
+      <!-- AD logotype, sourced from another-dimension-studio/public/logos -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840.3335 257.8983">
+        <g fill="#1F9D6F">
+          <path d="M22.1129,1.8497h60.6768l22.2893,123.3615h-48.4708l-.3536-28.6243h-7.0759l-.354,28.6243H0L22.1129,1.8497ZM49.7091,64.2695h6.0148l-.354-25.6694h-5.3069l-.354,25.6694Z"/>
+          <path d="M344.1394,38.9691h-21.7593V1.8497h89.5124v37.1194h-21.7593v86.242h-45.9938V38.9691Z"/>
+          <path d="M416.1674,1.8497h45.9938v45.7994h8.845V1.8497h45.9945v123.3615h-45.9945v-41.736h-8.845v41.736h-45.9938V1.8497Z"/>
+          <path d="M523.4983,1.8497h73.06v38.7818h-34.1417v6.8328h27.7734v33.2409h-27.7734v5.725h34.1417v38.781h-73.06V1.8497Z"/>
+          <path d="M686.3762,76.6409c9.3723-7.1984,13.0881-18.8348,13.0881-34.3451,0-26.2289-10.6134-40.4454-42.9878-40.4454h-53.4208v123.3596h47.5837l-4.7765-40.814h5.837l5.4835,40.814h41.9272v-36.564h-10.2599l-2.4747-12.0052ZM651.7,53.1875h-5.6565v-13.1107h5.6565v13.1107Z"/>
+          <path d="M141.4309,69.0702l7.7616,56.1409h-41.9479s0-123.3614,0-123.3614h52.5177s8.8231,55.0324,8.8231,55.0324h6.1908s-7.7608-55.0324-7.7608-55.0324h43.1855s0,123.3613,0,123.3613h-53.5785s-8.9999-56.1409-8.9999-56.1409h-6.1916Z"/>
+          <path d="M268.4305,0c-34.4956,0-53.9548,17.9173-53.9548,63.5302s19.4593,63.5304,53.9548,63.5304,53.9548-17.9173,53.9548-63.5304S302.9261,0,268.4305,0ZM272.011,85.2687h-7.1684v-43.4768h7.1684v43.4768Z"/>
+          <path d="M50.0697,132.6875H0v123.361h50.0697c38.7356,0,53.0711-16.8018,53.0711-60.7602,0-45.6087-15.3964-62.6008-53.0711-62.6008ZM52.4635,215.037h-6.8186v-43.9947h6.8186v43.9947Z"/>
+          <path d="M107.2445,132.6859h45.9963s0,123.3671,0,123.3671h-45.9963s0-123.3671,0-123.3671Z"/>
+          <path d="M223.0152,171.4672l.5304-38.7835h59.5554s0,123.3671,0,123.3671h-45.2257s3.8919-53.3726,3.8919-53.3726h-6.0147s-4.9535,53.3726-4.9535,53.3726h-19.106s-4.9535-53.7423-4.9535-53.7423h-6.5458s4.7767,53.7423,4.7767,53.7423h-45.232s0-123.3671,0-123.3671h56.5542s.5308,38.7835.5308,38.7835h6.1919Z"/>
+          <path d="M289.5986,132.686h73.0633s0,38.7829,0,38.7829h-34.1437s0,5.7253,0,5.7253h27.775s0,33.2424,0,33.2424h-27.775s0,6.833,0,6.833h34.1437s0,38.7836,0,38.7836h-73.0633s0-123.3671,0-123.3671Z"/>
+          <path d="M431.7407,199.9097l-9.0003,56.1435h-53.581s0-123.3671,0-123.3671h43.1875s-7.7612,55.035-7.7612,55.035h6.1911s8.8235-55.035,8.8235-55.035h52.5201s0,123.3671,0,123.3671h-41.9499s7.7619-56.1435,7.7619-56.1435h-6.1919Z"/>
+          <path d="M807.0522,188.8296l-7.7619-56.1435h41.0431s0,123.3671,0,123.3671h-51.6134s-8.8235-55.0349-8.8235-55.0349h-6.1911s7.7612,55.035,7.7612,55.035h-44.0942s0-123.3671,0-123.3671h54.4877s9.0003,56.1435,9.0003,56.1435h6.1919Z"/>
+          <path d="M478.6142,256.0533v-38.9677s35.9121,0,35.9121,0c6.5462,0,7.7846-.5539,7.7846-3.6939,0-2.5853-.8848-3.1392-5.3078-3.1392h-10.9678c-19.814,0-30.6057-12.3734-30.6057-36.1975,0-28.2559,15.2141-41.3689,40.8663-41.3689h52.1878s0,38.4138,0,38.4138h-36.0889c-3.0079,0-3.8919,1.4776-3.8919,3.509,0,2.4012,1.4152,3.3241,5.3071,3.3241h6.7223c22.4675,0,31.1361,10.1579,31.1362,37.306,0,30.8412-11.1453,40.8142-43.6967,40.8143h-49.3574Z"/>
+          <path d="M574.9171,132.6862h45.9959s0,123.3671,0,123.3671h-45.9959s0-123.3671,0-123.3671Z"/>
+          <path d="M679.1427,130.8378c-34.4956,0-53.9548,17.9173-53.9548,63.5302s19.4593,63.5304,53.9548,63.5304,53.9548-17.9173,53.9548-63.5304-19.4592-63.5302-53.9548-63.5302ZM682.7231,216.1064h-7.1684v-43.4768h7.1684v43.4768Z"/>
+        </g>
+      </svg>
+    </div>
+  </header>
+
+  <div class="title-block">
+    <div class="title-eye">Training brief · For Van Oord</div>
+    <h1>Automate or Sink</h1>
+    <div class="sub">A 30-player cooperative game for project controllers and engineers · 30 min · live in one room</div>
+  </div>
+
+  <h2 class="sec">Why this exists</h2>
+  <p>
+    Controllers and engineers at Van Oord do work that AI and automation can do for them — bonnetjes overtypen, maandafsluitingen handmatig consolideren, elke nieuwe BV vanaf nul opzetten. The gap is rarely capability ("we already have AI") and almost always mindset ("we've always done it this way"). This session is the trigger to break that habit.
+  </p>
+
+  <h2 class="sec">What it is</h2>
+  <p>
+    A cooperative game on a 3D Monopoly-style board, played live in one room. Five teams of six on five laptops, all in the same real-time session, projected on a host screen. Every project tile is a <b>real Van Oord project</b> — Afsluitdijk, Sofia, Borssele, Tuas Mega Port, Ain Sokhna, Aberdeen South. Each comes with one finance or engineering pain that ties to that project's reality. Players answer the question, earn or lose tokens. Buy automations at the in-game <b>Hub</b> — the benefit applies to <b>every team</b>. The game rewards cooperation, not competition.
+  </p>
+
+  <h2 class="sec">The goal — what players walk out with</h2>
+  <div class="two-col">
+    <div class="col">
+      <h3>Awareness</h3>
+      <p>They notice that the manual work they treated as "just how it is" is actually a choice. Every type of manual pain in the game has a real AI/automation alternative — not a hypothetical, a real tool that exists today.</p>
+    </div>
+    <div class="col">
+      <h3>One concrete action</h3>
+      <p>Each player names at least one thing they will try differently next week. Not a grand strategy — a single thing. <span class="em">"I'm going to look at whether the monthly close can pull from the ERP automatically."</span> That's enough.</p>
+    </div>
+  </div>
+
+  <h2 class="sec">Priority themes (in order of leverage)</h2>
+  <ol class="themes">
+    <li><b>Structure your knowledge.</b> Reusable templates, project-startup packs, single sources of truth. The biggest win at Van Oord isn't a clever AI trick — it's stopping the rebuild-from-zero pattern.</li>
+    <li><b>Ask AI by default.</b> The mindset shift: when you'd reach for Excel, open an AI assistant first. The reflex change <i>is</i> the lesson.</li>
+    <li><b>Automate your reporting.</b> Live dashboards instead of weekly Word reports. Self-service for PMs. Stop being the bottleneck.</li>
+    <li><b>Process documents with AI.</b> Receipts, invoices, change orders, install reports — read by AI, judged by you.</li>
+    <li><b>Find patterns humans can't.</b> Variance analysis, drift detection, scour patterns — the kind of insight that needs scale.</li>
+  </ol>
+
+  <div class="takeaway">
+    <span class="lbl">The take-away in one sentence</span>
+    Stop doing pointless work. Use AI to do the digging — your judgement is the value.
+  </div>
+
+  <h2 class="sec">How we know it worked</h2>
+  <p>
+    A week after the session, at least <b>two in three players</b> can name one specific thing they're trying differently because of the game. That's our bar. Anything above is a win, anything below means we tune the questions.
+  </p>
+
+  <h2 class="sec">Practical</h2>
+  <table class="practical">
+    <tr><td class="k">Live URL</td><td class="v">vanoord.anotherdimension.nl</td></tr>
+    <tr><td class="k">Host (big screen)</td><td class="v">…/?mode=host</td></tr>
+    <tr><td class="k">Player (per laptop)</td><td class="v">…/?mode=player</td></tr>
+    <tr><td class="k">Preview / demo</td><td class="v">…/?mode=demo</td></tr>
+    <tr><td class="k">Source</td><td class="v">github.com/thijsjochems/van-oord-monopoly</td></tr>
+  </table>
+
+  <h2 class="sec">Recommended follow-up</h2>
+  <ul class="followup">
+    <li><b>End of session:</b> 30-second written capture per player — "the one thing I'll try."</li>
+    <li><b>Two weeks later:</b> short check-in. Did it happen? What did you learn? The check-in matters more than the survey.</li>
+  </ul>
+
+  <footer class="briefing-foot">
+    <span>Built by Another Dimension · 2026</span>
+    <span>vanoord.anotherdimension.nl</span>
+  </footer>
+
+</div>
+
+<button class="print-hint" onclick="window.print()">Print → Save as PDF</button>
+
+</body>
+</html>
