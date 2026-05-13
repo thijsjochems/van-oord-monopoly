@@ -228,22 +228,34 @@
     return tex;
   }
 
+  // Wide canvas so corner labels ("Budget Freeze", "Free Parking", "Go to Freeze")
+  // fit comfortably along the diagonal of the corner tile without clipping.
   function makeBigLabel(text, sub /*, color (legacy, ignored) */) {
     const canvas = document.createElement('canvas');
-    canvas.width = 512;
-    canvas.height = 512;
+    canvas.width = 1024;
+    canvas.height = 384;
     const ctx = canvas.getContext('2d');
-    // Transparent — the tile base (cream) is the canvas; text sits directly on it.
-    ctx.clearRect(0, 0, 512, 512);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#1A2530';
-    ctx.font = 'bold 72px "Archivo", sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText((text || '').toUpperCase(), 256, 248);
+
+    // Auto-shrink the main text so it fits the canvas width (no more clipping
+    // on long labels). Starts large, steps down to a readable minimum.
+    const maxW = canvas.width - 80;
+    let mainSize = 120;
+    while (mainSize > 56) {
+      ctx.font = `bold ${mainSize}px "Archivo", sans-serif`;
+      if (ctx.measureText((text || '').toUpperCase()).width <= maxW) break;
+      mainSize -= 6;
+    }
+    ctx.font = `bold ${mainSize}px "Archivo", sans-serif`;
+    ctx.fillText((text || '').toUpperCase(), canvas.width / 2, sub ? 170 : canvas.height / 2);
+
     if (sub) {
-      ctx.font = '600 26px "Archivo", sans-serif';
+      ctx.font = '600 38px "Archivo", sans-serif';
       ctx.fillStyle = 'rgba(26,37,48,0.65)';
-      ctx.fillText(sub.toUpperCase(), 256, 320);
+      ctx.fillText(sub.toUpperCase(), canvas.width / 2, 280);
     }
     const tex = new T.CanvasTexture(canvas);
     tex.anisotropy = 8;
@@ -318,32 +330,24 @@
       lbl.rotation.x = -Math.PI / 2;
       lbl.position.set(0, TILE_H + 0.005, tf.d / 2 - 0.65);
       root.add(lbl);
-    } else if (tile.type === 'corner-start') {
-      const tex = makeBigLabel('GO', '+2 tokens', '#0E2A1E');
+    } else if (tile.type && tile.type.indexOf('corner-') === 0) {
+      // Corner labels: wide-thin plane laid flat, rotated 45° around the tile's
+      // vertical axis so the text reads along the corner's diagonal. Diagonal
+      // gives ~6.4u of length to use within the 4.5u corner tile vs ~3.5u for
+      // axis-aligned. That space is what stops "Budget Freeze" from clipping.
+      const cornerCopy = {
+        'corner-start':       { main: 'GO',           sub: '+2 tokens'        },
+        'corner-freeze':      { main: 'Budget Freeze', sub: 'skip 1 turn'     },
+        'corner-contingency': { main: 'Free Parking',  sub: 'collect the pot' },
+        'corner-go-freeze':   { main: 'Go to Freeze',  sub: 'go directly'     },
+      }[tile.type];
+      // Mirror sign per corner so the diagonal points outward consistently.
+      const diagSign = (idx === 0 || idx === 20) ? -1 : +1;
+      const tex = makeBigLabel(cornerCopy.main, cornerCopy.sub);
       const lm = new T.MeshBasicMaterial({ map: tex, transparent: true });
-      const lbl = new T.Mesh(new T.PlaneGeometry(tf.w * 0.78, tf.w * 0.78), lm);
+      const lbl = new T.Mesh(new T.PlaneGeometry(4.6, 1.7), lm);
       lbl.rotation.x = -Math.PI / 2;
-      lbl.position.set(0, TILE_H + 0.005, 0);
-      root.add(lbl);
-    } else if (tile.type === 'corner-freeze') {
-      const tex = makeBigLabel('Budget Freeze', 'skip 1 turn', '#1B2A36');
-      const lm = new T.MeshBasicMaterial({ map: tex, transparent: true });
-      const lbl = new T.Mesh(new T.PlaneGeometry(tf.w * 0.78, tf.w * 0.78), lm);
-      lbl.rotation.x = -Math.PI / 2;
-      lbl.position.set(0, TILE_H + 0.005, 0);
-      root.add(lbl);
-    } else if (tile.type === 'corner-contingency') {
-      const tex = makeBigLabel('Free Parking', 'collect the pot', '#2A2418');
-      const lm = new T.MeshBasicMaterial({ map: tex, transparent: true });
-      const lbl = new T.Mesh(new T.PlaneGeometry(tf.w * 0.78, tf.w * 0.78), lm);
-      lbl.rotation.x = -Math.PI / 2;
-      lbl.position.set(0, TILE_H + 0.005, 0);
-      root.add(lbl);
-    } else if (tile.type === 'corner-go-freeze') {
-      const tex = makeBigLabel('Go to Freeze', 'go directly', '#2A1818');
-      const lm = new T.MeshBasicMaterial({ map: tex, transparent: true });
-      const lbl = new T.Mesh(new T.PlaneGeometry(tf.w * 0.78, tf.w * 0.78), lm);
-      lbl.rotation.x = -Math.PI / 2;
+      lbl.rotation.z = diagSign * Math.PI / 4;
       lbl.position.set(0, TILE_H + 0.005, 0);
       root.add(lbl);
     }
