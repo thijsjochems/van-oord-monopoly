@@ -358,10 +358,10 @@ window.QUESTIONS = {
 // ============================================================================
 
 window.AUTOMATIONS = [
-  { id: 'receiptScanner',  name: 'Receipt Scanner',  desc: 'OCR + AI reads receipts and matches them to POs.', effect: 'Fuel cost −1 instead of −2', cost: 5 },
-  { id: 'autoReporting',   name: 'Auto Reporting',   desc: 'The monthly report fills itself from the ERP.',    effect: 'Manual Work −1 instead of −3', cost: 6 },
-  { id: 'projectTemplate', name: 'Project Template', desc: 'New BV setup goes from weeks to days.',            effect: 'Pass GO gives +4 instead of +2', cost: 7 },
-  { id: 'dataPipeline',    name: 'Data Pipeline',    desc: 'Four source systems, one live dashboard.',         effect: 'Correct answer gives +4 instead of +3', cost: 8 },
+  { id: 'receiptScanner',  name: 'Receipt Scanner',  desc: 'OCR + AI reads receipts and matches them to PO\'s. No more retyping.', effect: 'Fuel cost −1 instead of −2',           cost: 5 },
+  { id: 'autoReporting',   name: 'Auto Reporting',   desc: 'The monthly report fills itself from the ERP. Friday afternoons free.', effect: 'Manual Work −1 instead of −3',         cost: 6 },
+  { id: 'projectTemplate', name: 'Project Template', desc: 'Reusable startup pack for every new BV. Days, not weeks.',             effect: 'Pass GO gives +4 instead of +2',         cost: 7 },
+  { id: 'dataPipeline',    name: 'Data Pipeline',    desc: 'Four source systems → one live dashboard. PMs self-serve.',             effect: 'Correct answer gives +4 instead of +3', cost: 8 },
 ];
 
 // ============================================================================
@@ -369,18 +369,21 @@ window.AUTOMATIONS = [
 // ============================================================================
 
 window.BRIEFINGS = [
-  { title: 'Client request',       text: 'Client asks for a last-minute extra report. Building it manually eats your team\'s evening.',  tokenChange: -3, kind: 'pain' },
-  { title: 'Smart move',           text: 'A PC uses AI to draft the first version of the report. Time saved for the whole team.',         tokenChange:  2, kind: 'win',  collective: true },
-  { title: 'Excel crash',          text: 'Your consolidation model crashed. Two days of work, gone.',                                     tokenChange: -3, kind: 'pain' },
-  { title: 'AI breakthrough',      text: 'You fully automated a dashboard. The whole team benefits.',                                     tokenChange:  3, kind: 'win',  collective: true },
-  { title: 'Audit findings',       text: 'External auditor finds unexplained variances. Two days of reconciliation work.',               tokenChange: -2, kind: 'pain' },
-  { title: 'New hire',             text: 'Trainee starts — two weeks of onboarding on manual processes before they help.',               tokenChange: -1, kind: 'pain' },
-  { title: 'Dashboard live',       text: 'Power BI dashboard goes live. PMs stop sending Friday-afternoon DMs.',                          tokenChange:  3, kind: 'win' },
-  { title: 'OCR working',          text: '200 receipts this week — 195 auto-processed. Five edge cases for you.',                         tokenChange:  2, kind: 'win' },
-  { title: 'Month-end',            text: 'Working late again. Everyone pitches in.',                                                      tokenChange: -2, kind: 'pain' },
-  { title: 'Forecast in 5',        text: 'Data pipeline working: forecast in five minutes flat.',                                         tokenChange:  2, kind: 'win' },
-  { title: 'New BV up',            text: 'Project-startup pack used. BV setup in three days instead of three weeks.',                    tokenChange:  3, kind: 'win',  collective: true },
-  { title: 'Version chaos',        text: 'Three Excels emailed back and forth. Nobody knows which one is the truth.',                    tokenChange: -2, kind: 'pain' },
+  { title: 'Client request',       text: 'Client asks for a last-minute extra report. Building it manually eats your team\'s evening.',         tokenChange: -3, kind: 'pain' },
+  { title: 'Smart move',           text: 'A controller drafts the report with AI. Done in 30 minutes instead of 4 hours.',                       tokenChange:  2, kind: 'win'  },
+  { title: 'Excel crash',          text: 'Your consolidation model crashed. Two days of work, gone.',                                            tokenChange: -3, kind: 'pain' },
+  { title: 'AI breakthrough',      text: 'You fully automated a dashboard. The whole team benefits.',                                            tokenChange:  3, kind: 'win',  collective: true },
+  { title: 'Audit findings',       text: 'External auditor finds unexplained variances. Two days of reconciliation work.',                       tokenChange: -2, kind: 'pain' },
+  { title: 'New hire',             text: 'Trainee starts — two weeks of manual-process onboarding before they help.',                            tokenChange: -2, kind: 'pain' },
+  { title: 'Dashboard live',       text: 'Power BI dashboard goes live. PMs stop sending Friday-afternoon DMs to anyone.',                       tokenChange:  3, kind: 'win',  collective: true },
+  { title: 'OCR running',          text: 'OCR live across all sites. 195 receipts auto-processed this week, you handle the five edge cases.',  tokenChange:  2, kind: 'win',  collective: true },
+  { title: 'Month-end grind',      text: 'Month-end. Working late. Everyone pitches in. The pizza is on the company.',                          tokenChange: -2, kind: 'pain', collective: true },
+  { title: 'Forecast in 5',        text: 'Data pipeline working: forecast in five minutes flat.',                                                tokenChange:  2, kind: 'win'  },
+  { title: 'New BV up',            text: 'Project-startup pack used. BV setup in three days instead of three weeks.',                            tokenChange:  3, kind: 'win',  collective: true },
+  { title: 'Version chaos',        text: 'Three Excels emailed back and forth. Nobody knows which one is the truth.',                            tokenChange: -2, kind: 'pain' },
+  { title: 'Cash-flow flag',       text: 'AI flagged the Q3 cash-flow dip in your forecast. Two weeks\' notice instead of two weeks of fire-fighting.', tokenChange:  3, kind: 'win',  collective: true },
+  { title: 'Onboarding pack',      text: 'Onboarding video pack live. New hires productive in three days, not three weeks.',                     tokenChange:  2, kind: 'win',  collective: true },
+  { title: 'Audit assist',         text: 'AI summarised four audit memos in 12 minutes. Auditor closed without follow-up.',                      tokenChange:  3, kind: 'win'  },
 ];
 
 window.MANUAL_WORK_TEXTS = [
@@ -389,6 +392,10 @@ window.MANUAL_WORK_TEXTS = [
   'Excel crashed. Doing it all over again.',
   'Month-end missed because of manual consolidation.',
   'Four hours copying numbers from system A to system B.',
+  'Whole afternoon chasing one €847 mismatch.',
+  'Reconciliation done. Auditor asks for it again in a different format.',
+  'Tab `Final_v3_REAL_use_this` opened by mistake.',
+  'PM forwards your spreadsheet to the client without checking. Now you explain.',
 ];
 
 // ============================================================================

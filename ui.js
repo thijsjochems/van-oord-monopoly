@@ -890,15 +890,15 @@
     if (m >= 70) {
       cls = 'green';
       verdict = 'Project controllers of the future.';
-      blurb = 'Van Oord is ready for tomorrow. Manual work minimised, dashboards live, BV setup measured in days.';
+      blurb = '15-minute forecasts. Auto-closed month-end. New BV setup in days. This is what good looks like — take it back to your real projects on Monday.';
     } else if (m >= 30) {
       cls = 'yellow';
       verdict = 'On the right track.';
-      blurb = 'A few smart automations are running. Plenty of upside still left on the table.';
+      blurb = 'A few smart automations are running. Plenty more leverage on the table — pick the manual process that hurts most, automate that one this quarter.';
     } else {
       cls = 'red';
-      verdict = 'The project is spiralling.';
-      blurb = 'Too much manual work. Time to do this differently.';
+      verdict = 'Drowning in spreadsheets.';
+      blurb = 'Too much manual work. The good news: every flat tyre has an AI/automation fix. Pick one, ship it, then come back.';
     }
     const wrap = document.createElement('div');
     wrap.className = 'modal';
