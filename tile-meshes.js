@@ -719,10 +719,10 @@
   // Dispatch
   // ============================================================================
   function buildTileTop(tile) {
-    if (tile.type === 'corner-start')        return cornerStart();
-    if (tile.type === 'corner-freeze')       return cornerFreeze();
-    if (tile.type === 'corner-contingency')  return cornerContingency();
-    if (tile.type === 'corner-go-freeze')    return cornerGoFreeze();
+    // Corner tiles are text-only — no diorama (was overlapping the label).
+    // The corner builder functions are kept above so we can re-enable later if
+    // we ever want a small object back.
+    if (tile.type && tile.type.indexOf('corner-') === 0) return group('corner-empty');
     if (tile.type === 'fuel')                return fuelStation();
     if (tile.type === 'automation')          return automationHub();
     if (tile.type === 'manual')              return manualWork();

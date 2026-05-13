@@ -164,28 +164,47 @@
       ctx.fillText(options.eyebrow.toUpperCase(), 24, 42);
     }
 
-    // ---- project name (big) ----
+    // ---- project name (auto-fit so long labels don't overflow) ----
     ctx.fillStyle = textColor;
-    ctx.font = 'bold 62px "Archivo", sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     const maxW = canvas.width - 60;
-    const words = (text || '').split(' ');
-    const lines = [];
-    let cur = '';
-    for (const w of words) {
-      const trial = cur ? cur + ' ' + w : w;
-      if (ctx.measureText(trial).width > maxW && cur) {
-        lines.push(cur);
-        cur = w;
-      } else {
-        cur = trial;
+    // Vertical space available for the name (leave room for stars/eyebrow at top, subtitle at bottom).
+    const reservedTop    = (options.stars || options.placeholder || options.eyebrow) ? 60 : 30;
+    const reservedBottom = options.subtitle ? 80 : 30;
+    const maxH = canvas.height - reservedTop - reservedBottom;
+
+    function wrapAt(size) {
+      ctx.font = `bold ${size}px "Archivo", sans-serif`;
+      const words = (text || '').split(' ');
+      const out = [];
+      let cur = '';
+      for (const w of words) {
+        const trial = cur ? cur + ' ' + w : w;
+        if (ctx.measureText(trial).width > maxW && cur) {
+          out.push(cur);
+          cur = w;
+        } else {
+          cur = trial;
+        }
       }
+      if (cur) out.push(cur);
+      return out;
     }
-    if (cur) lines.push(cur);
-    const lh = 64;
-    // Position name in upper-middle of the band, reserving the lower strip for country
-    const nameBlockH = lines.length * lh;
+
+    let size = 62;
+    let lines = wrapAt(size);
+    let lh = size * 1.05;
+    while (size > 30) {
+      const tooWide = lines.some((ln) => ctx.measureText(ln).width > maxW);
+      const tooTall = lines.length * lh > maxH;
+      if (!tooWide && !tooTall) break;
+      size -= 4;
+      lines = wrapAt(size);
+      lh = size * 1.05;
+    }
+    ctx.font = `bold ${size}px "Archivo", sans-serif`;
+
     const nameCenterY = options.subtitle ? (canvas.height * 0.42) : (canvas.height / 2 + 16);
     const startY = nameCenterY - ((lines.length - 1) * lh) / 2;
     lines.forEach((ln, i) => ctx.fillText(ln.toUpperCase(), canvas.width / 2, startY + i * lh));
@@ -209,41 +228,21 @@
     return tex;
   }
 
-  function makeBigLabel(text, sub, color) {
+  function makeBigLabel(text, sub /*, color (legacy, ignored) */) {
     const canvas = document.createElement('canvas');
     canvas.width = 512;
     canvas.height = 512;
     const ctx = canvas.getContext('2d');
-    // transparent background — let the tile base show through
+    // Transparent — the tile base (cream) is the canvas; text sits directly on it.
     ctx.clearRect(0, 0, 512, 512);
-    // optional subtle disc behind text for legibility
-    if (color) {
-      ctx.fillStyle = color;
-      ctx.globalAlpha = 0.92;
-      // soft rounded rect
-      const r = 60, x = 30, y = 100, w = 452, h = 312;
-      ctx.beginPath();
-      ctx.moveTo(x + r, y);
-      ctx.lineTo(x + w - r, y);
-      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-      ctx.lineTo(x + w, y + h - r);
-      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-      ctx.lineTo(x + r, y + h);
-      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-      ctx.lineTo(x, y + r);
-      ctx.quadraticCurveTo(x, y, x + r, y);
-      ctx.closePath();
-      ctx.fill();
-      ctx.globalAlpha = 1;
-    }
-    ctx.fillStyle = '#FFFFFF';
+    ctx.fillStyle = '#1A2530';
     ctx.font = 'bold 72px "Archivo", sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText((text || '').toUpperCase(), 256, 248);
     if (sub) {
       ctx.font = '600 26px "Archivo", sans-serif';
-      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fillStyle = 'rgba(26,37,48,0.65)';
       ctx.fillText(sub.toUpperCase(), 256, 320);
     }
     const tex = new T.CanvasTexture(canvas);
