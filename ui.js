@@ -145,6 +145,82 @@
     if (mountCtx.autoStart && GS.state.status === 'lobby') {
       startSession();
     }
+
+    // First-time onboarding (tile types, scoring, automations). Per-tab via
+    // sessionStorage so a refresh during a session doesn't re-prompt.
+    injectHelpButton();
+    if (!sessionStorage.getItem('vo-seen-onboarding')) {
+      openOnboardingModal();
+    }
+  }
+
+  // ============================================================================
+  // Onboarding / how-to-play
+  // ============================================================================
+  function injectHelpButton() {
+    if (document.querySelector('[data-role="help-btn"]')) return;
+    const btn = document.createElement('button');
+    btn.className = 'help-btn';
+    btn.setAttribute('data-role', 'help-btn');
+    btn.title = 'How to play';
+    btn.textContent = '?';
+    btn.addEventListener('click', () => openOnboardingModal());
+    document.body.appendChild(btn);
+  }
+
+  function openOnboardingModal() {
+    const wrap = document.createElement('div');
+    wrap.className = 'modal onboarding';
+    wrap.innerHTML = `
+      <div class="modal-head" style="background:var(--bg-2);">
+        <div>
+          <div class="eye">Quick start</div>
+          <div class="title">Automate or Sink</div>
+        </div>
+        <div style="font-family:var(--t-mono);font-size:11px;color:var(--fg-3);text-align:right;">
+          15–20 min<br>5 teams · 1 board
+        </div>
+      </div>
+      <div class="modal-body">
+        <p class="situation">
+          Roll the dice. Move your pawn. Tile effects fire automatically.
+          Goal: get the <b>Automation Meter</b> to 70%+ by the end.
+        </p>
+
+        <div class="onboarding-grid">
+          <div class="ob-col">
+            <h4>Tiles</h4>
+            <ul class="ob-list">
+              <li><span class="ob-tag project">Project</span><span>Answer a question. <b>+3</b> correct, <b>−1</b> wrong.</span></li>
+              <li><span class="ob-tag fuel">Fuel</span><span>Operational cost. <b>−2</b> tokens.</span></li>
+              <li><span class="ob-tag manual">Manual</span><span>Manual process. <b>−3</b> tokens.</span></li>
+              <li><span class="ob-tag hub">Hub</span><span>Buy automations that work for <b>all</b> teams.</span></li>
+              <li><span class="ob-tag briefing">Briefing</span><span>Draw a random card — win or pain.</span></li>
+              <li><span class="ob-tag corner">GO</span><span>Pass for <b>+2</b> tokens.</span></li>
+              <li><span class="ob-tag corner">Free Parking</span><span>Collect the central pot.</span></li>
+              <li><span class="ob-tag corner">Budget Freeze</span><span>Skip a turn — answer to escape.</span></li>
+            </ul>
+          </div>
+          <div class="ob-col">
+            <h4>Scoring</h4>
+            <p>Tokens are personal — they go up and down with your tile actions.</p>
+            <p>The <b>Automation Meter</b> is collective. It rises when anyone answers correctly or buys an automation. Everyone's score.</p>
+            <h4>Automations</h4>
+            <p>Bought at any <b>Automation Hub</b>. Once unlocked they work for <b>every team</b> — that's the point. Some reduce penalties, others boost rewards.</p>
+            <p class="ob-hint">Tip: the team that buys an automation pays the cost, but the whole room benefits. Coordinate.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <span></span>
+        <button class="continue" data-role="continue">Got it — start playing</button>
+      </div>
+    `;
+    wrap.querySelector('[data-role="continue"]').addEventListener('click', () => {
+      sessionStorage.setItem('vo-seen-onboarding', '1');
+      closeModal();
+    });
+    openModalP(wrap);
   }
 
   // ============================================================================
