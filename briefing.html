@@ -55,10 +55,12 @@
       display: flex; align-items: center;
     }
     .vo-mark svg { height: 38px; width: auto; }
-    .ad-mark {
-      height: 22px;
-      display: flex; align-items: center;
+    .ad-cluster {
+      display: flex; align-items: center; gap: 10px;
     }
+    .ad-round { height: 18px; display: flex; align-items: center; }
+    .ad-round svg { height: 18px; width: 18px; }
+    .ad-mark { height: 22px; display: flex; align-items: center; }
     .ad-mark svg { height: 22px; width: auto; }
 
     /* ============================================================================
@@ -103,6 +105,13 @@
       border-bottom: 1.5px solid var(--ink);
     }
     h2.sec:first-of-type { margin-top: 0; }
+    /* Force the Practical block onto page 2 so the table doesn't split */
+    h2.sec.page-break {
+      page-break-before: always;
+      break-before: page;
+      padding-top: 16mm;
+      margin-top: 0;
+    }
     p, ol, ul {
       font-size: 11.5px;
       line-height: 1.55;
@@ -261,10 +270,18 @@
       <!-- Van Oord logo, sourced from vanoord.com -->
       <svg fill="none" height="80" viewBox="0 0 240 80" width="240" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="m172.616 47.4493h65.766v-43.82821h-65.766z" fill="#253a79" fill-rule="evenodd"/><path clip-rule="evenodd" d="m236.434 45.496v-38.55069l-38.54 38.55069z" fill="#ff8702" fill-rule="evenodd"/><path clip-rule="evenodd" d="m174.565 5.57031v14.87069c9.324 1.1464 20.804.8501 29.505-4.8919 3.161-2.0858 5.556-4.588 8.51-6.17567.003-.00172.006-.00258.009-.00343l-.008-.00258c2.039-1.09568 4.763-1.20989 6.371.22841 1.608 1.43917.445 1.64607.445 1.64607l-.917-.042-1.08-.0799c-.009-.0009-.019-.0009-.028-.0017l-.002.0026-.005-.0026c-.831-.0464-1.752.1477-2.668.814-3.146 2.2884-2.404 6.7175.276 8.2554 1.474.8467 3.835 1.2975 5.84-.3718l14.242-14.24559z" fill="#fffffe" fill-rule="evenodd"/><path clip-rule="evenodd" d="m225.663 28.7199-1.407-1.4074-1.405 1.4074 1.405 1.4065z" fill="#fffffe" fill-rule="evenodd"/><path clip-rule="evenodd" d="m226.899 33.5184-.497 1.8659 2.736.7462-.047.0936c-.567 1.0502-1.307 2.5305-1.784 3.8864h-2.086v-6.7785h-1.927v6.7785h-2.086c-.479-1.3559-1.217-2.8362-1.785-3.8864l-.047-.0936 2.737-.7462-.498-1.8659-4.912 1.306s2.86 4.7262 3.047 7.2138h9.015c.187-2.4876 3.047-7.2138 3.047-7.2138z" fill="#fffffe" fill-rule="evenodd"/><path clip-rule="evenodd" d="m219.75 32.2158h9.015v-1.3877h-9.015z" fill="#fffffe" fill-rule="evenodd"/><path d="m112.496 75.5502v-9.9341l-3.353 9.1278h-1.684l-3.264-9.1476v9.9539h-1.484v-12.226h2.401l3.389 9.4567 3.484-9.4567h2.143v12.226z" fill="#253a79"/><path d="m123.387 75.7494c-.842 0-1.281-.5891-1.447-1.3379-.805.7325-1.685 1.3379-2.82 1.3379-1.432 0-2.566-.9884-2.566-2.4559 0-.9179.383-1.6323 1.118-2.163 1.172-.863 2.638-.8802 4.03-.8802v-1.0819c0-1.1-.513-1.5585-1.593-1.5585-.989 0-1.926.3495-2.788.7882v-1.3378c.917-.4027 2.035-.6775 3.043-.6775.862 0 1.798.2009 2.421.8596.513.5512.55 1.2098.55 1.926v4.0684c0 .6793.036 1.3765.898 1.3765.091 0 .181 0 .274-.0197l.109.8981c-.383.1649-.804.2577-1.229.2577zm-1.685-4.5468c-.182 0-.385-.0172-.567-.0172-1.136 0-2.971.4217-2.971 1.8505 0 .8063.641 1.3937 1.432 1.3937.788 0 1.5-.4217 2.106-.8982z" fill="#253a79"/><path d="m130.852 67.8117c-1.212 0-2.017.8415-2.566 1.8315v5.9044h-1.632v-8.9639h1.632v1.6865c.566-1.0991 1.539-1.8874 2.803-1.8874.164 0 .351 0 .514.0352v1.5207c-.256-.0901-.475-.127-.751-.127z" fill="#253a79"/><path d="m133.565 64.9549h1.63v-1.6307h-1.63zm0 10.5953h1.63v-8.963h-1.63z" fill="#253a79"/><path d="m144.162 75.5476v-6.2513c0-.8243-.332-1.5018-1.265-1.5018-1.283 0-2.145.9523-2.806 1.9423v5.8108h-1.629v-8.963h1.629v1.6856c.716-1.0639 1.815-1.8874 3.137-1.8874 1.65 0 2.565 1.1361 2.565 2.7315v6.4333z" fill="#253a79"/><path d="m149.88 71.3134c.201 1.9415 1.049 3.2063 3.133 3.2063.9 0 1.653-.2378 2.496-.5495v1.2837c-.917.255-1.853.4955-2.806.4955-2.747 0-4.472-2.0343-4.472-4.7125 0-2.3468 1.319-4.6541 3.905-4.6541 2.603 0 3.408 2.2171 3.408 4.4532v.4774zm3.832-2.5847c-.273-.7152-.915-1.118-1.667-1.118-1.485 0-1.98 1.2082-2.089 2.4928h3.957c-.017-.4603-.037-.9351-.201-1.3748z" fill="#253a79"/><path d="m163.726 64.9549h1.631v-1.6307h-1.631zm0 10.5953h1.631v-8.963h-1.631z" fill="#253a79"/><path d="m174.318 75.5476v-6.2513c0-.8243-.329-1.5018-1.263-1.5018-1.283 0-2.146.9523-2.804 1.9423v5.8108h-1.632v-8.963h1.632v1.6856c.714-1.0639 1.813-1.8874 3.131-1.8874 1.65 0 2.568 1.1361 2.568 2.7315v6.4333z" fill="#253a79"/><path d="m186.491 73.9161c0 1.1901-.091 2.6378-.806 3.6468-.77 1.1-2.272 1.4477-3.537 1.4477-1.025 0-2.033-.1648-3.006-.4937l.186-1.3937c.915.4397 1.759.6595 2.783.6595 1.963 0 2.751-1.0252 2.751-2.9161v-1.4108c-.571 1.1747-1.669 1.8908-2.969 1.8908-2.456 0-3.501-2.1639-3.501-4.3458 0-2.3476 1.301-4.618 3.883-4.618 1.138 0 1.854.3821 2.587 1.2271v-1.0262h1.629zm-1.629-5.1874c-.642-.6792-1.394-1.1188-2.346-1.1188-1.87 0-2.401 1.8504-2.401 3.3909 0 1.3937.403 2.9153 2.089 2.9153 1.118 0 1.961-.6621 2.658-1.4675z" fill="#253a79"/><path d="m190.582 71.3134c.199 1.9415 1.047 3.2063 3.133 3.2063.9 0 1.651-.2378 2.494-.5495v1.2837c-.917.255-1.852.4955-2.806.4955-2.748 0-4.47-2.0343-4.47-4.7125 0-2.3468 1.318-4.6541 3.903-4.6541 2.603 0 3.409 2.2171 3.409 4.4532v.4774zm3.829-2.5847c-.272-.7152-.914-1.118-1.664-1.118-1.486 0-1.983 1.2082-2.092 2.4928h3.96c-.018-.4603-.038-.9351-.204-1.3748z" fill="#253a79"/><path d="m204.769 75.5476v-6.2513c0-.8243-.328-1.5018-1.263-1.5018-1.283 0-2.146.9523-2.802 1.9423v5.8108h-1.634v-8.963h1.634v1.6856c.712-1.0639 1.813-1.8874 3.132-1.8874 1.648 0 2.565 1.1361 2.565 2.7315v6.4333z" fill="#253a79"/><path d="m215.147 75.5489v-1.6873c-.713 1.063-1.796 1.8891-3.133 1.8891-1.631 0-2.567-1.1549-2.567-2.7306v-6.4342h1.633v6.2126c0 .4225.036.8072.331 1.1369.236.2559.586.4216.933.4216 1.246 0 2.161-1.0089 2.803-1.9612v-5.8099h1.633v8.963z" fill="#253a79"/><path d="m220.046 64.9549h1.631v-1.6307h-1.631zm0 10.5953h1.631v-8.963h-1.631z" fill="#253a79"/><path d="m226.625 67.8149v4.9666c0 1.0819.348 1.7612 1.521 1.7612.276 0 .532-.037.788-.11v1.118c-.422.1091-.862.2018-1.302.2018-1.666 0-2.637-1.0261-2.637-2.6782v-5.2594h-1.119v-1.228h1.119v-1.6315l1.63-.1468v1.7783h2.345v1.228z" fill="#253a79"/><path d="m233.463 78.8128h-1.684l1.463-3.2639-3.481-8.963h1.757l2.568 6.745 2.731-6.745h1.558z" fill="#253a79"/><path d="m0 22.3086h6.46848l5.99272 18.2883h.0627l5.8717-18.2883h4.0393l-8.0794 25.0882h-6.08894z" fill="#253a79"/><path d="m38.9959 47.397c-1.0132.2765-2.0531.4147-3.0904.4147-1.6744 0-3.378-.2739-4.1998-2.0788h-.3787c-1.1343 1.3867-2.5237 2.0788-4.2573 2.0788-2.9659 0-5.4896-2.1493-5.4896-5.5849 0-5.4483 4.9537-6.629 7.0017-6.629h3.1239v-1.179c0-1.7337-1.0072-2.4988-3.0294-2.4988-1.86 0-3.9758.5221-5.5824 1.5989v-4.1663c2.0815-.8304 4.2565-1.1807 6.4367-1.1807 6.4677 0 7.8862 2.6387 7.8862 6.283v7.3194c0 .7994-.0309 1.8762.9781 1.8762h.601zm-7.2902-8.0502h-1.2322c-1.0399 0-3.1832.1039-3.1832 2.358 0 1.1472.7231 1.9457 1.7998 1.9457 1.0391 0 1.9862-.6234 2.6156-1.4915z" fill="#253a79"/><path d="m48.5783 32.127h.3778c1.0416-2.3588 3.154-3.9551 5.5875-3.9551 3.4682 0 5.0791 2.5666 5.0791 5.8648v13.3594h-6.0906v-11.2779c0-1.2494.0644-2.9488-1.4821-2.9488-1.3902 0-2.4301 1.562-3.0939 2.7401v11.4866h-6.0889v-18.8069h6.0889z" fill="#253a79"/><path d="m86.4925 21.6836c7.4113 0 12.3359 4.8567 12.3359 13.1842 0 8.3302-4.9246 13.1517-12.3359 13.1517-7.4121 0-12.3685-4.8215-12.3685-13.1517 0-8.3275 4.9564-13.1842 12.3685-13.1842zm0 22.1738c4.2917 0 5.8683-4.964 5.8683-8.9896 0-4.0238-1.5766-9.0222-5.8683-9.0222-4.3235 0-5.9034 4.9984-5.9034 9.0222 0 4.0256 1.5799 8.9896 5.9034 8.9896z" fill="#253a79"/><path d="m101.098 37.9944c0-3.4382 1.391-9.8225 9.496-9.8225 8.109 0 9.528 6.3843 9.528 9.8225 0 3.4339-1.419 9.8182-9.528 9.8182-8.105 0-9.496-6.3843-9.496-9.8182zm9.496 6.0735c2.461 0 3.061-4.0625 3.061-6.0735 0-2.0128-.6-6.0726-3.061-6.0726-2.429 0-3.029 4.0598-3.029 6.0726 0 2.011.6 6.0735 3.029 6.0735z" fill="#253a79"/><path d="m129.617 32.127h.377c1.039-2.3588 3.155-3.9551 5.584-3.9551h.691v5.8991c-.724-.3477-1.512-.4843-2.3-.4843-1.673 0-3.061.7265-3.975 2.3228v11.4866h-6.093v-18.8069h6.093z" fill="#253a79"/><path d="m150.625 43.8578h-.377c-.949 2.4635-2.996 3.9542-5.427 3.9542-4.954 0-6.657-4.6472-6.657-9.3683 0-5.0653 1.988-10.2707 7.29-10.2707 2.144 0 3.152.693 4.794 2.0815h.377l-.377-1.665v-7.9489h6.089v26.7575h-6.089zm-.377-9.9264c-.601-1.0399-1.484-1.8007-2.62-1.8007-2.366 0-2.995 3.816-2.995 5.7927 0 1.8736.472 4.8919 2.71 4.8919 1.421 0 2.334-1.3876 2.905-2.6362z" fill="#253a79"/></svg>
     </div>
-    <div class="ad-mark" aria-label="Another Dimension">
-      <!-- AD logotype, sourced from anotherdimension.nl/logos -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840.3335 257.8983">
-        <g fill="#1F9D6F">
+    <div class="ad-cluster">
+      <div class="ad-round" aria-label="Another Dimension mark">
+        <!-- AD round mark, sourced from anotherdimension.nl/logos. Re-coloured
+             to dark green so it reads on white. -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 209.3402 209.3457" fill="#1F9D6F">
+          <path d="M189.2603,96.3379h-42.7301l39.4598-16.3379.0098-.0098.0201-.0098c-1.6199-5.3711-3.7701-10.5176-6.38-15.3809l-.0195.0098-39.4501,16.3281,30.1996-30.1953c-3.5297-4.2969-7.4799-8.252-11.7798-11.7773l-30.1898,30.1855,16.3397-39.4434c-4.8596-2.627-10.0098-4.7656-15.39-6.3965h-.0098v.0195l-16.3403,39.4531V20.0781c-2.7399-.2637-5.52-.4102-8.3295-.4102s-5.5902.1465-8.3301.4102v42.7148l-16.3501-39.4629v-.0195h-.0104c-5.3796,1.6211-10.52,3.7695-15.3796,6.377l-11.3403-16.9531-.0299-.0391c-4.87,2.6953-9.5001,5.8008-13.8599,9.248l.0403.0488,11.3293,16.9629c4.2902-3.5156,8.9307-6.6309,13.8605-9.248l16.3397,39.4531-30.2002-30.1953c-4.2999,3.5352-8.2397,7.4805-11.7798,11.7773l30.2002,30.1953-39.4299-16.3184-.0098-.0098-.0305-.0098c-2.6099,4.8633-4.7498,10.0098-6.38,15.3809v.0098h.0201l39.4702,16.3477H20.08c-.2698,2.7441-.4095,5.5273-.4095,8.3301,0,2.8125.1398,5.5957.4095,8.3301h42.7002l-39.4403,16.3477h-.0299v.0098c1.6302,5.3711,3.7701,10.5176,6.38,15.3809h.0201l.0104-.0098,39.4397-16.3379-30.2002,30.2051c3.5303,4.2969,7.4799,8.252,11.7798,11.7773l.0305-.0293,30.1801-30.166-16.33,39.4238-.0201.0391c4.8596,2.6172,10.0098,4.7656,15.3796,6.3867l.0104-.0098v-.0098l16.3501-39.4629v42.7148c2.7399.2734,5.52.4102,8.3301.4102s5.5896-.1367,8.3295-.4102v-42.6953l16.3403,39.4434.0098.0195c5.3802-1.6211,10.5304-3.7695,15.39-6.3867l-.0195-.0391-16.3306-39.4238,30.2002,30.1953c4.2999-3.5254,8.2501-7.4805,11.7798-11.7773l-30.1801-30.1953,39.4104,16.3086.0397.0293c2.6202-4.8633,4.7601-10.0098,6.38-15.3809l-.0299-.0195-.0397-.0098-39.3903-16.3281h42.7002c.2698-2.7344.4102-5.5176.4102-8.3301,0-2.8027-.1404-5.5859-.4102-8.3301Z"/>
+        </svg>
+      </div>
+      <div class="ad-mark" aria-label="Another Dimension">
+        <!-- AD logotype, sourced from anotherdimension.nl/logos -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840.3335 257.8983">
+          <g fill="#1F9D6F">
           <path d="M22.1129,1.8497h60.6768l22.2893,123.3615h-48.4708l-.3536-28.6243h-7.0759l-.354,28.6243H0L22.1129,1.8497ZM49.7091,64.2695h6.0148l-.354-25.6694h-5.3069l-.354,25.6694Z"/>
           <path d="M344.1394,38.9691h-21.7593V1.8497h89.5124v37.1194h-21.7593v86.242h-45.9938V38.9691Z"/>
           <path d="M416.1674,1.8497h45.9938v45.7994h8.845V1.8497h45.9945v123.3615h-45.9945v-41.736h-8.845v41.736h-45.9938V1.8497Z"/>
@@ -283,6 +300,7 @@
           <path d="M679.1427,130.8378c-34.4956,0-53.9548,17.9173-53.9548,63.5302s19.4593,63.5304,53.9548,63.5304,53.9548-17.9173,53.9548-63.5304-19.4592-63.5302-53.9548-63.5302ZM682.7231,216.1064h-7.1684v-43.4768h7.1684v43.4768Z"/>
         </g>
       </svg>
+      </div>
     </div>
   </header>
 
@@ -294,38 +312,38 @@
 
   <h2 class="sec">Why this exists</h2>
   <p>
-    Controllers and engineers at Van Oord do work that AI and automation can do for them — bonnetjes overtypen, maandafsluitingen handmatig consolideren, elke nieuwe BV vanaf nul opzetten. The gap is rarely capability ("we already have AI") and almost always mindset ("we've always done it this way"). This session is the trigger to break that habit.
+    Controllers and engineers at Van Oord do work that AI and automation can do for them: retyping receipts by hand, consolidating month-end manually, setting up each new project entity from scratch. The gap is rarely capability ("we already have AI") and almost always mindset ("we've always done it this way"). This session is the trigger to break that habit.
   </p>
 
   <h2 class="sec">What it is</h2>
   <p>
-    A cooperative game on a 3D Monopoly-style board, played live in one room. Five teams of six on five laptops, all in the same real-time session, projected on a host screen. Every project tile is a <b>real Van Oord project</b> — Afsluitdijk, Sofia, Borssele, Tuas Mega Port, Ain Sokhna, Aberdeen South. Each comes with one finance or engineering pain that ties to that project's reality. Players answer the question, earn or lose tokens. Buy automations at the in-game <b>Hub</b> — the benefit applies to <b>every team</b>. The game rewards cooperation, not competition.
+    A cooperative game on a 3D Monopoly-style board, played live in one room. Five teams of six on five laptops, all in the same real-time session, projected on a host screen. Every project tile is a <b>real Van Oord project</b>: Afsluitdijk, Sofia, Borssele, Tuas Mega Port, Ain Sokhna, Aberdeen South. Each comes with one finance or engineering pain that ties to that project's reality. Players answer the question, earn or lose tokens. Buy automations at the in-game <b>Hub</b> and the benefit applies to <b>every team</b>. The game rewards cooperation, not competition.
   </p>
 
-  <h2 class="sec">The goal — what players walk out with</h2>
+  <h2 class="sec">The goal: what players walk out with</h2>
   <div class="two-col">
     <div class="col">
       <h3>Awareness</h3>
-      <p>They notice that the manual work they treated as "just how it is" is actually a choice. Every type of manual pain in the game has a real AI/automation alternative — not a hypothetical, a real tool that exists today.</p>
+      <p>They notice that the manual work they treated as "just how it is" is actually a choice. Every type of manual pain in the game has a real AI or automation alternative. Not a hypothetical, a real tool that exists today.</p>
     </div>
     <div class="col">
       <h3>One concrete action</h3>
-      <p>Each player names at least one thing they will try differently next week. Not a grand strategy — a single thing. <span class="em">"I'm going to look at whether the monthly close can pull from the ERP automatically."</span> That's enough.</p>
+      <p>Each player names at least one thing they will try differently next week. Not a grand strategy. Just a single thing. <span class="em">"I'm going to look at whether the monthly close can pull from the ERP automatically."</span> That's enough.</p>
     </div>
   </div>
 
   <h2 class="sec">Priority themes (in order of leverage)</h2>
   <ol class="themes">
-    <li><b>Structure your knowledge.</b> Reusable templates, project-startup packs, single sources of truth. The biggest win at Van Oord isn't a clever AI trick — it's stopping the rebuild-from-zero pattern.</li>
+    <li><b>Structure your knowledge.</b> Reusable templates, project-startup packs, single sources of truth. The biggest win at Van Oord isn't a clever AI trick. It's stopping the rebuild-from-zero pattern.</li>
     <li><b>Ask AI by default.</b> The mindset shift: when you'd reach for Excel, open an AI assistant first. The reflex change <i>is</i> the lesson.</li>
     <li><b>Automate your reporting.</b> Live dashboards instead of weekly Word reports. Self-service for PMs. Stop being the bottleneck.</li>
-    <li><b>Process documents with AI.</b> Receipts, invoices, change orders, install reports — read by AI, judged by you.</li>
-    <li><b>Find patterns humans can't.</b> Variance analysis, drift detection, scour patterns — the kind of insight that needs scale.</li>
+    <li><b>Process documents with AI.</b> Receipts, invoices, change orders, install reports: read by AI, judged by you.</li>
+    <li><b>Find patterns humans can't.</b> Variance analysis, drift detection, scour patterns. The kind of insight that needs scale.</li>
   </ol>
 
   <div class="takeaway">
     <span class="lbl">The take-away in one sentence</span>
-    Stop doing pointless work. Use AI to do the digging — your judgement is the value.
+    Stop doing pointless work. Use AI to do the digging. Your judgement is the value.
   </div>
 
   <h2 class="sec">How we know it worked</h2>
@@ -333,7 +351,7 @@
     A week after the session, at least <b>two in three players</b> can name one specific thing they're trying differently because of the game. That's our bar. Anything above is a win, anything below means we tune the questions.
   </p>
 
-  <h2 class="sec">Practical</h2>
+  <h2 class="sec page-break">Practical</h2>
   <table class="practical">
     <tr><td class="k">Live URL</td><td class="v">vanoord.anotherdimension.nl</td></tr>
     <tr><td class="k">Host (big screen)</td><td class="v">…/?mode=host</td></tr>
@@ -344,7 +362,7 @@
 
   <h2 class="sec">Recommended follow-up</h2>
   <ul class="followup">
-    <li><b>End of session:</b> 30-second written capture per player — "the one thing I'll try."</li>
+    <li><b>End of session:</b> 30-second written capture per player. "The one thing I'll try."</li>
     <li><b>Two weeks later:</b> short check-in. Did it happen? What did you learn? The check-in matters more than the survey.</li>
   </ul>
 
