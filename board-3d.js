@@ -439,7 +439,10 @@
       // ---- water plane underneath (ocean halo around board)
       const water = new T.Mesh(
         new T.PlaneGeometry(140, 140),
-        new T.MeshStandardMaterial({ color: 0x09202E, roughness: 0.7, metalness: 0.3 }),
+        // Lifted from #09202E → #1B4E6A so the water reads as a clearly lit
+        // ocean halo around the board. The board frame + inner panel stay
+        // dark, giving a "dark island floating on lighter water" hierarchy.
+        new T.MeshStandardMaterial({ color: 0x1B4E6A, roughness: 0.55, metalness: 0.4 }),
       );
       water.rotation.x = -Math.PI / 2;
       water.position.y = -0.25;
