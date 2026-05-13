@@ -26,7 +26,7 @@ window.GROUPS = {
 window.TILES = [
   /* 0  */ { type: 'corner-start', name: 'GO' },
 
-  /* 1  */ { type: 'project',    id: 'millport',              name: 'Millport (Scotland)',      group: 'brown',     stars: 1, archetype: 'lighthouse' },
+  /* 1  */ { type: 'project',    id: 'millport',              name: 'Millport',                 group: 'brown',     stars: 1, archetype: 'lighthouse', country: 'Scotland' },
   /* 2  */ { type: 'briefing',   name: 'Project Briefing' },
   /* 3  */ { type: 'project',    id: 'lincolnshire',          name: 'Lincolnshire Coast',       group: 'brown',     stars: 2, archetype: 'rock-armor' },
   /* 4  */ { type: 'manual',     name: 'Manual Work' },

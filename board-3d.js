@@ -168,7 +168,10 @@
     ctx.fillStyle = textColor;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    const maxW = canvas.width - 60;
+    // Tighter horizontal margin: previous 60px wasn't enough for long single
+    // words like Oosterscheldekering once they got mapped onto the slightly-
+    // narrower-than-canvas tile plane. 110px reads with comfortable margin.
+    const maxW = canvas.width - 110;
     // Vertical space available for the name (leave room for stars/eyebrow at top, subtitle at bottom).
     const reservedTop    = (options.stars || options.placeholder || options.eyebrow) ? 60 : 30;
     const reservedBottom = options.subtitle ? 80 : 30;
@@ -192,10 +195,12 @@
       return out;
     }
 
+    // Step font size down until both width AND height fit. Drop floor from 30
+    // to 22 so 19-letter single-word labels (Oosterscheldekering) survive.
     let size = 62;
     let lines = wrapAt(size);
     let lh = size * 1.05;
-    while (size > 30) {
+    while (size > 22) {
       const tooWide = lines.some((ln) => ctx.measureText(ln).width > maxW);
       const tooTall = lines.length * lh > maxH;
       if (!tooWide && !tooTall) break;
@@ -291,11 +296,13 @@
       band.position.set(0, TILE_H + BAND_H * 0.8, tf.d / 2 - 0.75);
       band.receiveShadow = true;
       root.add(band);
-      // label plane — name + small country subtitle below
+      // label plane — name + small country subtitle below.
+      // Per-tile `country` overrides the group default, so e.g. Millport can
+      // show "Scotland" instead of the group's "United Kingdom".
       const tex = makeLabelTexture(tile.name, group.color, group.text || '#0E1A22', {
         stars: tile.stars,
         placeholder: tile.placeholder,
-        subtitle: group.countries,
+        subtitle: tile.country || group.countries,
       });
       const labelMat = new T.MeshBasicMaterial({ map: tex, transparent: false });
       const label = new T.Mesh(new T.PlaneGeometry(tf.w - 0.1, 1.65), labelMat);
