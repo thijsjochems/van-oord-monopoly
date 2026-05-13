@@ -212,6 +212,8 @@
   }
 
   // ---- PLAYER LOBBY ---------------------------------------------------------
+  // One laptop per group → no per-team display-name form, no submit button.
+  // Type the session code, the five team cards appear; tap one and you're in.
   function renderPlayerLobby(prefillCode) {
     lobbyEl.style.display = '';
     lobbyEl.innerHTML = `
@@ -220,26 +222,17 @@
           <div class="brand-mark">VO</div>
           <div class="t">Join the session</div>
         </header>
-        <form class="join-form" data-role="join-form" autocomplete="off">
-          <div class="field">
-            <label class="lbl">Session code</label>
-            <input type="text" name="code" value="${_escape(prefillCode)}" placeholder="VO-1234"
-                   maxlength="7" required autocomplete="off" inputmode="latin"
-                   data-role="code-input" class="code-input">
-          </div>
-          <div class="field">
-            <label class="lbl">Team display name <span class="opt">(optional, max 30)</span></label>
-            <input type="text" name="display" placeholder="Use team default if empty"
-                   maxlength="30" autocomplete="off">
-          </div>
-          <div class="field">
-            <label class="lbl">Pick your team</label>
-            <div class="team-pick" data-role="team-pick"></div>
-            <input type="hidden" name="teamId" required>
-          </div>
-          <div class="status-line" data-role="status-line"></div>
-          <button type="submit" class="btn-primary big">Join session</button>
-        </form>
+        <div class="field">
+          <label class="lbl">Session code</label>
+          <input type="text" value="${_escape(prefillCode)}" placeholder="VO-1234"
+                 maxlength="7" autocomplete="off" inputmode="latin"
+                 data-role="code-input" class="code-input">
+        </div>
+        <div class="field">
+          <label class="lbl">Tap your team</label>
+          <div class="team-pick big" data-role="team-pick"></div>
+        </div>
+        <div class="status-line" data-role="status-line"></div>
       </div>
     `;
 
@@ -249,23 +242,6 @@
     codeInput.addEventListener('input', _debounce(() => {
       _refreshTeamPicker(codeInput.value);
     }, 350));
-
-    $('[data-role="join-form"]').addEventListener('submit', async (ev) => {
-      ev.preventDefault();
-      const fd = new FormData(ev.target);
-      const code = String(fd.get('code') || '').toUpperCase().trim();
-      const display = String(fd.get('display') || '').trim();
-      const teamId = String(fd.get('teamId') || '');
-      const status = $('[data-role="status-line"]');
-      if (!teamId) { status.textContent = 'Pick a team first.'; return; }
-      try {
-        status.textContent = 'Joining…';
-        await window.Sync.joinSession(code, teamId, display);
-        renderPlayerWaiting();
-      } catch (err) {
-        status.textContent = 'Could not join: ' + err.message;
-      }
-    });
   }
 
   function _renderTeamPickerEmpty() {
@@ -313,20 +289,28 @@
       const isTaken = !!taken[def.id];
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'team-pill' + (isTaken ? ' taken' : '');
+      btn.className = 'team-pill big' + (isTaken ? ' taken' : '');
       btn.style.setProperty('--team-color', def.color);
       btn.disabled = isTaken;
       btn.innerHTML = `
-        <span class="dot"></span>
-        <span class="nm">${def.name}</span>
         <span class="pawn">${_pawnEmoji(def.pawn)}</span>
-        <span class="state">${isTaken ? 'TAKEN' : 'OPEN'}</span>
+        <span class="nm">${def.name}</span>
+        <span class="state">${isTaken ? 'TAKEN' : 'TAP TO JOIN'}</span>
       `;
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', async () => {
         if (isTaken) return;
-        wrap.querySelectorAll('.team-pill').forEach((p) => p.classList.remove('selected'));
-        btn.classList.add('selected');
-        $('input[name="teamId"]').value = def.id;
+        const status = $('[data-role="status-line"]');
+        status.textContent = 'Joining as ' + def.name + '…';
+        // disable all team pills while the join is in flight
+        wrap.querySelectorAll('.team-pill').forEach((p) => p.disabled = true);
+        try {
+          await window.Sync.joinSession(code, def.id, def.name);
+          renderPlayerWaiting();
+        } catch (err) {
+          status.textContent = 'Could not join: ' + err.message;
+          // re-enable picker so the user can try another team / fix the code
+          _refreshTeamPicker(code);
+        }
       });
       wrap.appendChild(btn);
     }

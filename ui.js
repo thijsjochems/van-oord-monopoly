@@ -125,7 +125,7 @@
       // Selective rendering: timer ticks fire every second (host pushes
       // timerRemaining → all clients get a 'timer' notify). Re-rendering the
       // host panel and player panel each tick causes the feed to flicker via
-      // innerHTML wipes — so for timer-only updates, just refresh the topbar.
+      // innerHTML wipes. So for timer-only updates, just refresh the topbar.
       if (ev.kind === 'timer') {
         renderTopbar();
         return;
@@ -134,7 +134,7 @@
     });
 
     // In multiplayer, the host already flipped status to "playing" via the lobby
-    // Start button — kick off the timer immediately so we don't need an extra
+    // Start button. Kick off the timer immediately so we don't need an extra
     // click in the game view.
     if (GS.state.status === 'playing' && !timerInterval) {
       startTimer();
@@ -145,6 +145,82 @@
     if (mountCtx.autoStart && GS.state.status === 'lobby') {
       startSession();
     }
+
+    // First-time onboarding (tile types, scoring, automations). Per-tab via
+    // sessionStorage so a refresh during a session doesn't re-prompt.
+    injectHelpButton();
+    if (!sessionStorage.getItem('vo-seen-onboarding')) {
+      openOnboardingModal();
+    }
+  }
+
+  // ============================================================================
+  // Onboarding / how-to-play
+  // ============================================================================
+  function injectHelpButton() {
+    if (document.querySelector('[data-role="help-btn"]')) return;
+    const btn = document.createElement('button');
+    btn.className = 'help-btn';
+    btn.setAttribute('data-role', 'help-btn');
+    btn.title = 'How to play';
+    btn.textContent = '?';
+    btn.addEventListener('click', () => openOnboardingModal());
+    document.body.appendChild(btn);
+  }
+
+  function openOnboardingModal() {
+    const wrap = document.createElement('div');
+    wrap.className = 'modal onboarding';
+    wrap.innerHTML = `
+      <div class="modal-head" style="background:var(--bg-2);">
+        <div>
+          <div class="eye">Quick start</div>
+          <div class="title">Automate or Sink</div>
+        </div>
+        <div style="font-family:var(--t-mono);font-size:11px;color:var(--fg-3);text-align:right;">
+          15–20 min<br>5 teams · 1 board
+        </div>
+      </div>
+      <div class="modal-body">
+        <p class="situation">
+          Roll the dice. Move your pawn. Tile effects fire automatically.
+          Goal: get the <b>Automation Meter</b> to 70%+ by the end.
+        </p>
+
+        <div class="onboarding-grid">
+          <div class="ob-col">
+            <h4>Tiles</h4>
+            <ul class="ob-list">
+              <li><span class="ob-tag project">Project</span><span>Answer a question. <b>+3</b> correct, <b>−1</b> wrong.</span></li>
+              <li><span class="ob-tag fuel">Fuel</span><span>Operational cost. <b>−2</b> tokens.</span></li>
+              <li><span class="ob-tag manual">Manual</span><span>Manual process. <b>−3</b> tokens.</span></li>
+              <li><span class="ob-tag hub">Hub</span><span>Buy automations that work for <b>all</b> teams.</span></li>
+              <li><span class="ob-tag briefing">Briefing</span><span>Draw a random card. Win or pain.</span></li>
+              <li><span class="ob-tag corner">GO</span><span>Pass for <b>+2</b> tokens.</span></li>
+              <li><span class="ob-tag corner">Free Parking</span><span>Collect the central pot.</span></li>
+              <li><span class="ob-tag corner">Budget Freeze</span><span>Skip a turn. Answer to escape.</span></li>
+            </ul>
+          </div>
+          <div class="ob-col">
+            <h4>Scoring</h4>
+            <p>Tokens are personal. They go up and down with your tile actions.</p>
+            <p>The <b>Automation Meter</b> is collective. It rises when anyone answers correctly or buys an automation. Everyone's score.</p>
+            <h4>Automations</h4>
+            <p>Bought at any <b>Automation Hub</b>. Once unlocked they work for <b>every team</b>. That's the point. Some reduce penalties, others boost rewards.</p>
+            <p class="ob-hint">Tip: the team that buys an automation pays the cost, but the whole room benefits. Coordinate.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <span></span>
+        <button class="continue" data-role="continue">Got it. Start playing</button>
+      </div>
+    `;
+    wrap.querySelector('[data-role="continue"]').addEventListener('click', () => {
+      sessionStorage.setItem('vo-seen-onboarding', '1');
+      closeModal();
+    });
+    openModalP(wrap);
   }
 
   // ============================================================================
@@ -223,7 +299,7 @@
       if (myIdx >= 0) s.activeTeamIndex = myIdx;
     }
 
-    // tabs (hide in player mode — they only have one team)
+    // tabs (hide in player mode. They only have one team)
     $player.tabs.innerHTML = '';
     if (!isPlayer) {
       s.teams.forEach((t, i) => {
@@ -249,32 +325,27 @@
       return;
     }
     const here = window.TILES[team.position];
-    const tileLabel = here.type === 'project' ? here.name : here.name;
+    const tileLabel = here.name;
     $player.body.innerHTML = '';
 
-    // you card
-    const youCard = document.createElement('div');
-    youCard.className = 'you-card';
-    youCard.style.setProperty('--team-color', team.color);
-    youCard.innerHTML = `
-      <div class="eyebrow">Your team</div>
-      <div class="name">${team.name}</div>
-      <div class="pawn-line">${pawnEmoji(team.pawn)} ${pawnName(team.pawn)}</div>
-    `;
-    $player.body.appendChild(youCard);
-
-    // tokens
-    const tokens = document.createElement('div');
-    tokens.className = 'tokens-display';
-    tokens.innerHTML = `
-      <div class="big">${team.tokens}</div>
-      <div class="meta">
-        <span class="lbl">Your tokens</span>
-        <span class="here">${tileLabel}</span>
-        <span class="pos">tile ${String(team.position).padStart(2, '0')} / 39</span>
+    // Combined team-status card: name + pawn + tokens + current tile in one block
+    const status = document.createElement('div');
+    status.className = 'team-status';
+    status.style.setProperty('--team-color', team.color);
+    status.innerHTML = `
+      <div class="ts-head">
+        <span class="ts-pawn">${pawnEmoji(team.pawn)}</span>
+        <div class="ts-name">
+          <div class="ts-team">${team.name}</div>
+          <div class="ts-here">${tileLabel}</div>
+        </div>
+      </div>
+      <div class="ts-tokens">
+        <span class="ts-num">${team.tokens}</span>
+        <span class="ts-lbl">tokens</span>
       </div>
     `;
-    $player.body.appendChild(tokens);
+    $player.body.appendChild(status);
 
     // dice
     const dice = document.createElement('div');
@@ -293,15 +364,6 @@
     rollBtn.disabled = isHost || s.status !== 'playing' || busyTeams.has(team.id);
     if (isHost) rollBtn.textContent = 'Host view (read-only)';
     rollBtn.addEventListener('click', () => onRoll(team));
-
-    // mini meter
-    const mini = document.createElement('div');
-    mini.className = 'mini-meter';
-    mini.innerHTML = `
-      <div class="row"><span class="lbl">Automation Meter</span><span class="val">${s.automationMeter}%</span></div>
-      <div class="bar"><div class="fill" style="width:${s.automationMeter}%"></div></div>
-    `;
-    $player.body.appendChild(mini);
 
     // automations active
     const al = document.createElement('div');
@@ -332,7 +394,7 @@
     $footer.meterLbl.textContent = `Automation Meter · ${label}`;
   }
 
-  // Inline SVG silhouette for the excavator — unicode has no excavator emoji,
+  // Inline SVG silhouette for the excavator. Unicode has no excavator emoji,
   // and 🚜 (tractor) misrepresents the 3D pawn. Other pawns map cleanly to emoji.
   const EXCAVATOR_SVG = '<svg viewBox="0 0 24 18" width="20" height="15" fill="currentColor" style="display:inline-block;vertical-align:-3px;"><rect x="2" y="13" width="14" height="3.5" rx="1.5"/><rect x="5" y="7.5" width="6" height="5.5" rx="0.5"/><path d="M11 9 L19 3 L21 5 L12.5 11 Z"/><path d="M19 3 L22.5 3 L22 6 L19.5 5 Z"/></svg>';
   function pawnEmoji(p) {
@@ -380,7 +442,7 @@
   }
 
   function startTimer() {
-    // In multiplayer, only the host runs the countdown — players read
+    // In multiplayer, only the host runs the countdown. Players read
     // timerRemaining from Firebase via the snapshot listener.
     if (mountCtx.role === 'player') return;
     if (timerInterval) clearInterval(timerInterval);
@@ -482,7 +544,7 @@
       return;
     }
     if (tile.type === 'corner-freeze') {
-      // landing on Budget Freeze (not sent there) — just a visit
+      // landing on Budget Freeze (not sent there). Just a visit
       GS.logEvent(`${team.name} is just visiting Budget Freeze.`, { teamId: team.id, tone: 'system' });
       return;
     }
@@ -496,16 +558,16 @@
       return;
     }
     if (tile.type === 'corner-contingency') {
-      // Free Parking — collect the pot if any
+      // Free Parking. Collect the pot if any
       if (s.pot > 0) {
         const collected = s.pot;
         GS.clearPot();
         GS.changeTokens(team.id, collected, 'free-parking');
         floatCoin(team.id, `+${collected}`, 'win');
         if (board.collectPot) board.collectPot(team.id, s.teams);
-        GS.logEvent(`${team.name} lands on Free Parking — collects ${collected} tokens from the pot!`, { teamId: team.id, tone: 'win' });
+        GS.logEvent(`${team.name} lands on Free Parking. Collects ${collected} tokens from the pot!`, { teamId: team.id, tone: 'win' });
       } else {
-        // pot empty — still a small reward of a briefing card
+        // pot empty. Still a small reward of a briefing card
         const card = randomBriefing();
         await openModalP(buildBriefingModal(team, card));
       }
@@ -549,7 +611,7 @@
   function checkFreeze(team) {
     if (team.tokens <= 0 && team.freezeRounds === 0) {
       GS.setTeamFreeze(team.id, 1);
-      GS.logEvent(`${team.name} enters Budget Freeze — out of tokens.`, { teamId: team.id, tone: 'pain' });
+      GS.logEvent(`${team.name} enters Budget Freeze. Out of tokens.`, { teamId: team.id, tone: 'pain' });
     }
   }
 
@@ -610,11 +672,10 @@
 
     let answered = false;
 
-    const stars = '★'.repeat(tile.stars) + '☆'.repeat(3 - tile.stars);
     wrap.innerHTML = `
       <div class="modal-head">
         <div>
-          <div class="eye">${group.name} · ${stars}${isPlaceholder ? ' · 🚧' : ''}</div>
+          <div class="eye">${group.name}${isPlaceholder ? ' · 🚧' : ''}</div>
           <div class="title">${tile.name}</div>
         </div>
         <div style="font-family:var(--t-display);font-weight:900;font-size:28px;color:${group.text || '#0E1A22'};opacity:0.7;">${team.name}</div>
@@ -699,7 +760,7 @@
         </div>
       </div>
       <div class="modal-body">
-        <p class="situation">Any purchase here applies to <strong>every team</strong>. That is the whole point — one team buys, everyone benefits.</p>
+        <p class="situation">Any purchase here applies to <strong>every team</strong>. That is the whole point. One team buys, everyone benefits.</p>
         <div class="auts-grid"></div>
       </div>
       <div class="modal-foot">
@@ -890,15 +951,15 @@
     if (m >= 70) {
       cls = 'green';
       verdict = 'Project controllers of the future.';
-      blurb = 'Van Oord is ready for tomorrow. Manual work minimised, dashboards live, BV setup measured in days.';
+      blurb = '15-minute forecasts. Auto-closed month-end. New BV setup in days. This is what good looks like. Take it back to your real projects on Monday.';
     } else if (m >= 30) {
       cls = 'yellow';
       verdict = 'On the right track.';
-      blurb = 'A few smart automations are running. Plenty of upside still left on the table.';
+      blurb = 'A few smart automations are running. Plenty more leverage on the table. Pick the manual process that hurts most, automate that one this quarter.';
     } else {
       cls = 'red';
-      verdict = 'The project is spiralling.';
-      blurb = 'Too much manual work. Time to do this differently.';
+      verdict = 'Drowning in spreadsheets.';
+      blurb = 'Too much manual work. The good news: every flat tyre has an AI/automation fix. Pick one, ship it, then come back.';
     }
     const wrap = document.createElement('div');
     wrap.className = 'modal';
