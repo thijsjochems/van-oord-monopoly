@@ -134,41 +134,42 @@
   // Canvas label texture
   // ============================================================================
   function makeLabelTexture(text, regionColor, textColor, options = {}) {
+    // Higher-resolution canvas: 1024×384 instead of 640×240. Same aspect-ish,
+    // but gives long labels (Oosterscheldekering, Hollandse Kust Noord) room
+    // to breathe at full font size before auto-shrink kicks in.
     const canvas = document.createElement('canvas');
-    canvas.width = 640;
-    canvas.height = 240;
+    canvas.width = 1024;
+    canvas.height = 384;
     const ctx = canvas.getContext('2d');
     ctx.fillStyle = regionColor || '#0E1A22';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     // top + bottom rules
     ctx.fillStyle = 'rgba(0,0,0,0.22)';
-    ctx.fillRect(0, 0, canvas.width, 6);
-    ctx.fillRect(0, canvas.height - 6, canvas.width, 6);
+    ctx.fillRect(0, 0, canvas.width, 10);
+    ctx.fillRect(0, canvas.height - 10, canvas.width, 10);
 
     if (options.placeholder) {
       ctx.fillStyle = textColor;
-      ctx.font = 'bold 28px "JetBrains Mono", monospace';
+      ctx.font = 'bold 45px "JetBrains Mono", monospace';
       ctx.textAlign = 'left';
-      ctx.fillText('🚧', 24, 42);
+      ctx.fillText('🚧', 38, 67);
     }
     if (options.eyebrow) {
       ctx.fillStyle = textColor;
-      ctx.font = '600 22px "Archivo", sans-serif';
+      ctx.font = '600 35px "Archivo", sans-serif';
       ctx.textAlign = 'left';
-      ctx.fillText(options.eyebrow.toUpperCase(), 24, 42);
+      ctx.fillText(options.eyebrow.toUpperCase(), 38, 67);
     }
 
     // ---- project name (auto-fit so long labels don't overflow) ----
     ctx.fillStyle = textColor;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    // Tighter horizontal margin: previous 60px wasn't enough for long single
-    // words like Oosterscheldekering once they got mapped onto the slightly-
-    // narrower-than-canvas tile plane. 110px reads with comfortable margin.
-    const maxW = canvas.width - 110;
+    // Generous horizontal padding so labels don't kiss the band edges.
+    const maxW = canvas.width - 175;
     // Vertical space available for the name (leave room for stars/eyebrow at top, subtitle at bottom).
-    const reservedTop    = (options.stars || options.placeholder || options.eyebrow) ? 60 : 30;
-    const reservedBottom = options.subtitle ? 80 : 30;
+    const reservedTop    = (options.placeholder || options.eyebrow) ? 96 : 48;
+    const reservedBottom = options.subtitle ? 128 : 48;
     const maxH = canvas.height - reservedTop - reservedBottom;
 
     function wrapAt(size) {
@@ -189,22 +190,23 @@
       return out;
     }
 
-    // Step font size down until both width AND height fit. Drop floor from 30
-    // to 22 so 19-letter single-word labels (Oosterscheldekering) survive.
-    let size = 62;
+    // Auto-shrink. Start big, step down until width AND height fit. With the
+    // 1024-wide canvas and the 175px padding, almost everything fits at the
+    // starting size; only Oosterscheldekering shrinks a step or two.
+    let size = 99;
     let lines = wrapAt(size);
     let lh = size * 1.05;
-    while (size > 22) {
+    while (size > 35) {
       const tooWide = lines.some((ln) => ctx.measureText(ln).width > maxW);
       const tooTall = lines.length * lh > maxH;
       if (!tooWide && !tooTall) break;
-      size -= 4;
+      size -= 6;
       lines = wrapAt(size);
       lh = size * 1.05;
     }
     ctx.font = `bold ${size}px "Archivo", sans-serif`;
 
-    const nameCenterY = options.subtitle ? (canvas.height * 0.42) : (canvas.height / 2 + 16);
+    const nameCenterY = options.subtitle ? (canvas.height * 0.42) : (canvas.height / 2 + 26);
     const startY = nameCenterY - ((lines.length - 1) * lh) / 2;
     lines.forEach((ln, i) => ctx.fillText(ln.toUpperCase(), canvas.width / 2, startY + i * lh));
 
@@ -212,12 +214,12 @@
     if (options.subtitle) {
       ctx.fillStyle = textColor;
       ctx.globalAlpha = 0.75;
-      ctx.font = '600 24px "Archivo", sans-serif';
+      ctx.font = '600 38px "Archivo", sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText(options.subtitle.toUpperCase(), canvas.width / 2, canvas.height - 38);
+      ctx.fillText(options.subtitle.toUpperCase(), canvas.width / 2, canvas.height - 60);
       // hairline above subtitle
       ctx.globalAlpha = 0.35;
-      ctx.fillRect(canvas.width / 2 - 70, canvas.height - 62, 140, 1.5);
+      ctx.fillRect(canvas.width / 2 - 112, canvas.height - 100, 224, 2.5);
       ctx.globalAlpha = 1;
     }
 
@@ -439,7 +441,10 @@
       // ---- water plane underneath (ocean halo around board)
       const water = new T.Mesh(
         new T.PlaneGeometry(140, 140),
-        new T.MeshStandardMaterial({ color: 0x09202E, roughness: 0.7, metalness: 0.3 }),
+        // Lifted further to #2F7AA0 (saturated mid-teal). Now genuinely
+        // contrasts with the dark frame + inner panel, so the board reads
+        // as a "dark island floating on lit water" at first glance.
+        new T.MeshStandardMaterial({ color: 0x2F7AA0, roughness: 0.5, metalness: 0.45 }),
       );
       water.rotation.x = -Math.PI / 2;
       water.position.y = -0.25;
