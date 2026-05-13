@@ -325,32 +325,27 @@
       return;
     }
     const here = window.TILES[team.position];
-    const tileLabel = here.type === 'project' ? here.name : here.name;
+    const tileLabel = here.name;
     $player.body.innerHTML = '';
 
-    // you card
-    const youCard = document.createElement('div');
-    youCard.className = 'you-card';
-    youCard.style.setProperty('--team-color', team.color);
-    youCard.innerHTML = `
-      <div class="eyebrow">Your team</div>
-      <div class="name">${team.name}</div>
-      <div class="pawn-line">${pawnEmoji(team.pawn)} ${pawnName(team.pawn)}</div>
-    `;
-    $player.body.appendChild(youCard);
-
-    // tokens
-    const tokens = document.createElement('div');
-    tokens.className = 'tokens-display';
-    tokens.innerHTML = `
-      <div class="big">${team.tokens}</div>
-      <div class="meta">
-        <span class="lbl">Your tokens</span>
-        <span class="here">${tileLabel}</span>
-        <span class="pos">tile ${String(team.position).padStart(2, '0')} / 39</span>
+    // Combined team-status card: name + pawn + tokens + current tile in one block
+    const status = document.createElement('div');
+    status.className = 'team-status';
+    status.style.setProperty('--team-color', team.color);
+    status.innerHTML = `
+      <div class="ts-head">
+        <span class="ts-pawn">${pawnEmoji(team.pawn)}</span>
+        <div class="ts-name">
+          <div class="ts-team">${team.name}</div>
+          <div class="ts-here">${tileLabel}</div>
+        </div>
+      </div>
+      <div class="ts-tokens">
+        <span class="ts-num">${team.tokens}</span>
+        <span class="ts-lbl">tokens</span>
       </div>
     `;
-    $player.body.appendChild(tokens);
+    $player.body.appendChild(status);
 
     // dice
     const dice = document.createElement('div');
@@ -369,15 +364,6 @@
     rollBtn.disabled = isHost || s.status !== 'playing' || busyTeams.has(team.id);
     if (isHost) rollBtn.textContent = 'Host view (read-only)';
     rollBtn.addEventListener('click', () => onRoll(team));
-
-    // mini meter
-    const mini = document.createElement('div');
-    mini.className = 'mini-meter';
-    mini.innerHTML = `
-      <div class="row"><span class="lbl">Automation Meter</span><span class="val">${s.automationMeter}%</span></div>
-      <div class="bar"><div class="fill" style="width:${s.automationMeter}%"></div></div>
-    `;
-    $player.body.appendChild(mini);
 
     // automations active
     const al = document.createElement('div');

@@ -231,28 +231,44 @@ button { font-family: inherit; }
 
 .player-body { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
 
-.you-card {
+/* Combined team-status block: name, pawn, tokens, current tile in one card.
+   Replaces the older you-card + tokens-display pair. */
+.team-status {
   background: var(--bg-2);
   border-left: 3px solid var(--team-color, var(--accent));
   padding: 14px 16px;
-}
-.you-card .eyebrow { font-family: var(--t-mono); font-size: 10px; color: var(--fg-3); letter-spacing: 2.5px; text-transform: uppercase; }
-.you-card .name { font-family: var(--t-display); font-weight: 800; font-size: 22px; text-transform: uppercase; margin-top: 2px; }
-.you-card .pawn-line { font-size: 12px; color: var(--fg-2); margin-top: 4px; }
-
-.tokens-display {
-  background: var(--bg-2); padding: 16px;
-  display: grid; grid-template-columns: auto 1fr; gap: 16px;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
+  gap: 16px;
 }
-.tokens-display .big {
-  font-family: var(--t-display); font-weight: 900; font-size: 56px;
-  line-height: 1; color: var(--accent); letter-spacing: -2px;
+.team-status .ts-head { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.team-status .ts-pawn { font-size: 26px; line-height: 1; flex-shrink: 0; }
+.team-status .ts-name { min-width: 0; }
+.team-status .ts-team {
+  font-family: var(--t-display); font-weight: 800; font-size: 17px;
+  text-transform: uppercase; line-height: 1.1;
 }
-.tokens-display .meta { display: flex; flex-direction: column; gap: 2px; }
-.tokens-display .meta .lbl { font-family: var(--t-mono); font-size: 10px; color: var(--fg-3); letter-spacing: 2px; text-transform: uppercase; }
-.tokens-display .meta .pos { font-size: 12px; color: var(--fg-2); }
-.tokens-display .meta .here { font-size: 13px; color: var(--fg-1); font-weight: 600; }
+.team-status .ts-here {
+  font-size: 11px; color: var(--fg-2); margin-top: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.team-status .ts-tokens { text-align: right; line-height: 1; }
+.team-status .ts-num {
+  display: block;
+  font-family: var(--t-display); font-weight: 900; font-size: 38px;
+  color: var(--accent); letter-spacing: -1px;
+}
+.team-status .ts-lbl {
+  display: block;
+  font-family: var(--t-mono); font-size: 9px;
+  color: var(--fg-3); letter-spacing: 2px; text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* Legacy classes kept hidden in case any third-party hook still references
+   them — they're no longer rendered. */
+.you-card, .tokens-display { display: none !important; }
 
 .dice-area {
   background: var(--bg-2); padding: 16px;
@@ -297,19 +313,8 @@ button { font-family: inherit; }
   min-height: 16px;
 }
 
-.mini-meter {
-  background: var(--bg-2); padding: 14px;
-}
-.mini-meter .row { display: flex; justify-content: space-between; align-items: baseline; }
-.mini-meter .lbl { font-family: var(--t-mono); font-size: 10px; color: var(--fg-3); letter-spacing: 2px; text-transform: uppercase; }
-.mini-meter .val { font-family: var(--t-display); font-weight: 900; font-size: 22px; color: var(--positive); }
-.mini-meter .bar { margin-top: 8px; height: 10px; background: var(--bg); border: 1px solid var(--line); position: relative; overflow: hidden; }
-.mini-meter .fill {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  background: linear-gradient(90deg, var(--marine), var(--positive));
-  width: 0%;
-  transition: width 0.5s ease;
-}
+/* mini-meter dropped — footer meter is enough. Class kept for legacy DOM. */
+.mini-meter { display: none !important; }
 
 .automations-list {
   background: var(--bg-2); padding: 14px;
