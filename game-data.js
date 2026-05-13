@@ -1,9 +1,9 @@
 // ============================================================================
-// VAN OORD — AUTOMATE OR SINK
+// VAN OORD. AUTOMATE OR SINK
 // Game data: 22 verified Van Oord projects in 8 canonical Monopoly color groups.
 // Every color group sits in one country (or one tightly coupled regional cluster
 // where Van Oord has only single projects per country, like the BE/DK/PL wind
-// trio). The two darkblue tiles — the Mayfair + Park Lane equivalents — are
+// trio). The two darkblue tiles (the Mayfair + Park Lane equivalents) are
 // both Dutch megaprojects so the "most expensive" tier reads as one place.
 //
 // All 22 projects have been verified against public Van Oord / press sources
@@ -74,13 +74,13 @@ window.TILES = [
 ];
 
 // ============================================================================
-// Questions — 17 real, 5 placeholders. English. Each tied to a project tile by id.
+// Questions. 17 real, 5 placeholders. English. Each tied to a project tile by id.
 // ============================================================================
 
 window.QUESTIONS = {
   // ---- DUBAI ISLANDS (pink) ----
   'palm-jumeirah': {
-    situation: 'On site in Dubai, your team gets 200 receipts a week from local suppliers — fuel, catering, materials. Someone is currently typing each one into Excel by hand to match them against open POs.',
+    situation: 'On site in Dubai, your team gets 200 receipts a week from local suppliers. Fuel, catering, materials. Someone is currently typing each one into Excel by hand to match them against open POs.',
     question: 'Where do you start?',
     options: [
       { text: 'Build a better Excel template with dropdowns and validation',           correct: false },
@@ -99,7 +99,7 @@ window.QUESTIONS = {
       { text: 'Build a Power BI dashboard fed straight from the ERP',                      correct: true  },
       { text: 'Hire a junior to handle the data wrangling',                                correct: false },
     ],
-    explanation: 'Shortcuts are bandaids. The real problem is that you redo the same work every month — automatable by definition. Set up Power BI once, benefit forever.',
+    explanation: 'Shortcuts are bandaids. The real problem is that you redo the same work every month. Automatable by definition. Set up Power BI once, benefit forever.',
   },
   'palm-deira': {
     situation: 'Palm Deira is back from hibernation: original 2008 scope, revised 2014, mothballed 2018, restart 2024. Three different reporting templates along the way, three different chart-of-accounts revisions. Senior management asks: "What is cumulative cost-to-date vs the original 2008 baseline?" The 2008 controller is retired.',
@@ -110,7 +110,7 @@ window.QUESTIONS = {
       { text: 'Have AI reconcile the historical reports to the 2008 baseline',    correct: true  },
       { text: 'Reset to 2024 as the new baseline going forward',                  correct: false },
     ],
-    explanation: 'Messy historical data in inconsistent formats is the textbook AI use case. Your job is judgement on the edge cases — not pulling the data into one shape.',
+    explanation: 'Messy historical data in inconsistent formats is the textbook AI use case. Your job is judgement on the edge cases. Not pulling the data into one shape.',
   },
 
   // ---- DUTCH COASTAL HERITAGE (lightblue) ----
@@ -130,14 +130,14 @@ window.QUESTIONS = {
     question: 'What do you set up on day one?',
     options: [
       { text: 'Hire a permanent admin team dedicated to the 25-year reporting',                  correct: false },
-      { text: 'Build automated reporting and a live forecast model on day one — anything manual gets multiplied by 25', correct: true  },
+      { text: 'Build automated reporting and a live forecast model on day one. Anything manual gets multiplied by 25', correct: true  },
       { text: 'Use Excel for now; revisit the reporting structure in year three or four',         correct: false },
       { text: 'Wait for Rijkswaterstaat to dictate their preferred reporting format',             correct: false },
     ],
     explanation: 'A 25-year contract amplifies every inefficiency by 25×. Anything you set up by hand on day one becomes a quarter of a century of pain. Get the structure right and automate it before the first invoice lands.',
   },
   'marker-wadden': {
-    situation: 'Marker Wadden is a brand-new kind of Van Oord project — biodiversity islands built from sediment in the IJsselmeer for Natuurmonumenten. No template for the unusual cost categories (eco-monitoring, vegetation surveys, bird counts). The PM team is waiting for your reporting structure before they can start.',
+    situation: 'Marker Wadden is a brand-new kind of Van Oord project. Biodiversity islands built from sediment in the IJsselmeer for Natuurmonumenten. No template for the unusual cost categories (eco-monitoring, vegetation surveys, bird counts). The PM team is waiting for your reporting structure before they can start.',
     question: 'How do you stand it up in days, not weeks?',
     options: [
       { text: 'Force-fit the costs into the standard dredging chart of accounts',                  correct: false },
@@ -145,23 +145,23 @@ window.QUESTIONS = {
       { text: 'Brief AI on the project scope; ask for a draft chart of accounts you can iterate',  correct: true  },
       { text: 'Email head office and wait for guidance',                                            correct: false },
     ],
-    explanation: 'Structure-from-scratch is exactly what AI is for. Your brain stays free for the parts only you can do — talking to the PM, judging which categories matter, picking what to track.',
+    explanation: 'Structure-from-scratch is exactly what AI is for. Your brain stays free for the parts only you can do. Talking to the PM, judging which categories matter, picking what to track.',
   },
 
   // ---- DUTCH OFFSHORE WIND (orange) ----
   'egmond-aan-zee': {
-    situation: 'Egmond aan Zee (OWEZ) was Van Oord\'s first offshore wind installation back in 2007. You still have the project files: cost baseline, supplier contracts, post-mortems, lessons learned. The next North Sea wind tender is being prepared — same kind of installation work, similar conditions.',
+    situation: 'Egmond aan Zee (OWEZ) was Van Oord\'s first offshore wind installation back in 2007. You still have the project files: cost baseline, supplier contracts, post-mortems, lessons learned. The next North Sea wind tender is being prepared. Same kind of installation work, similar conditions.',
     question: 'What do you do with the OWEZ data?',
     options: [
-      { text: 'Archive it — every project is unique anyway',                                  correct: false },
+      { text: 'Archive it. Every project is unique anyway',                                  correct: false },
       { text: 'Build a structured knowledge base from OWEZ that the next tender team can fork', correct: true  },
       { text: 'Email a few key contacts to the next tender team',                              correct: false },
       { text: 'Send a folder of select PDFs to the next tender team',                          correct: false },
     ],
-    explanation: 'Every "next project" is faster if the previous project\'s data is structured for reuse. Knowledge transfer needs a data structure — not a chat over coffee.',
+    explanation: 'Every "next project" is faster if the previous project\'s data is structured for reuse. Knowledge transfer needs a data structure. Not a chat over coffee.',
   },
   'princess-amalia': {
-    situation: 'Princess Amalia (Q7) is jointly owned by Eneco and Mitsubishi. Quarterly cost reports go to both partners — each in their own template. You maintain both Excels by hand. Last quarter Mitsubishi spotted a €40k discrepancy between the two reports — you spent two days reconciling.',
+    situation: 'Princess Amalia (Q7) is jointly owned by Eneco and Mitsubishi. Quarterly cost reports go to both partners. Each in their own template. You maintain both Excels by hand. Last quarter Mitsubishi spotted a €40k discrepancy between the two reports. You spent two days reconciling.',
     question: 'Smart approach?',
     options: [
       { text: 'Ask both partners to standardise on one shared template',                                  correct: false },
@@ -169,18 +169,18 @@ window.QUESTIONS = {
       { text: 'Build one mega-template combining all fields from both partner formats',                   correct: false },
       { text: 'Maintain two separate Excels but cross-check each one against the other',                  correct: false },
     ],
-    explanation: 'When data lives in two places, it diverges. The answer is one source with many outputs — never two sources you sync by hand.',
+    explanation: 'When data lives in two places, it diverges. The answer is one source with many outputs. Never two sources you sync by hand.',
   },
   'borssele': {
-    situation: 'Every month you send a 12-tab Borssele Excel to head-office finance. They copy parts of it into their consolidation model — and you know they regularly mistype.',
+    situation: 'Every month you send a 12-tab Borssele Excel to head-office finance. They copy parts of it into their consolidation model. And you know they regularly mistype.',
     question: 'What do you actually fix?',
     options: [
       { text: 'Format it more clearly so they make fewer mistakes',                              correct: false },
       { text: 'Send a manual along with the file',                                                correct: false },
-      { text: 'Make the data available to finance via a direct link — nobody retypes',            correct: true  },
+      { text: 'Make the data available to finance via a direct link. Nobody retypes',            correct: true  },
       { text: 'Send it earlier so they have more time',                                           correct: false },
     ],
-    explanation: 'Double work means double the risk. When two people maintain the same numbers in two files, the question is not whether mistakes happen — it is when.',
+    explanation: 'Double work means double the risk. When two people maintain the same numbers in two files, the question is not whether mistakes happen. It is when.',
   },
 
   // ---- UK MAJOR WORKS (red) ----
@@ -196,7 +196,7 @@ window.QUESTIONS = {
     explanation: 'A template is a form you still have to fill in. An automated report is a form that fills itself in. Feel the difference.',
   },
   'lincolnshire': {
-    situation: 'Quarterly report to the Environment Agency for the Lincolnshire coastal protection contract. Same format, different numbers. It eats a full day every quarter — including the half hour explaining to your junior why three numbers always differ from last time.',
+    situation: 'Quarterly report to the Environment Agency for the Lincolnshire coastal protection contract. Same format, different numbers. It eats a full day every quarter. Including the half hour explaining to your junior why three numbers always differ from last time.',
     question: 'How do you turn a day into an hour?',
     options: [
       { text: 'Outsource the report writing to an external agency',                                       correct: false },
@@ -204,7 +204,7 @@ window.QUESTIONS = {
       { text: 'Block a Tuesday each quarter and bash it out',                                             correct: false },
       { text: 'Use last quarter\'s report as a template and update the numbers',                          correct: false },
     ],
-    explanation: 'A day of writing vs. an hour of reviewing. The report does not need to be written by you — it needs to be approved by you. Those are different jobs.',
+    explanation: 'A day of writing vs. an hour of reviewing. The report does not need to be written by you. It needs to be approved by you. Those are different jobs.',
   },
   'millport': {
     situation: 'The Millport project is small but has a long tail: 80+ small change orders since kick-off. Someone asks: "What is the total impact of all changes on the original budget?" You have no idea where to start.',
@@ -215,12 +215,12 @@ window.QUESTIONS = {
       { text: 'Paste the change log into AI; ask for totals, categories, biggest outliers',       correct: true  },
       { text: 'Ask a colleague to help you go through them all',                                  correct: false },
     ],
-    explanation: 'AI does not replace your judgement — it replaces the digging that precedes it. Get the structure out first; you go in on top of it.',
+    explanation: 'AI does not replace your judgement. It replaces the digging that precedes it. Get the structure out first; you go in on top of it.',
   },
 
   // ---- NORTH-SEA & BALTIC WIND (yellow) ----
   'norther': {
-    situation: 'Norther is the offshore wind farm you and Engie own together. Both partners produce monthly cost reports — yours from IFS, theirs from their own template. Consolidating both into the joint board pack eats the full first week of every month. The board sees numbers when the project is already in mid-month — every steering decision is two weeks late.',
+    situation: 'Norther is the offshore wind farm you and Engie own together. Both partners produce monthly cost reports. Yours from IFS, theirs from their own template. Consolidating both into the joint board pack eats the full first week of every month. The board sees numbers when the project is already in mid-month. Every steering decision is two weeks late.',
     question: 'What unblocks this?',
     options: [
       { text: 'Push the board meeting back a week so consolidation has more runway',                correct: false },
@@ -228,10 +228,10 @@ window.QUESTIONS = {
       { text: 'Automate the consolidation; pack ready Monday week 1',                                correct: true  },
       { text: 'Negotiate a unified reporting template with Engie',                                   correct: false },
     ],
-    explanation: 'Consolidation is not your value-add — analysis is. The board needs numbers fresh, not perfect. Automate the input, get back the first week of the month.',
+    explanation: 'Consolidation is not your value-add. Analysis is. The board needs numbers fresh, not perfect. Automate the input, get back the first week of the month.',
   },
   'kriegers-flak': {
-    situation: 'The Danish energy ministry wants cost reports in their own format — different from what your ERP exports. Someone retypes the numbers into the client template every month, plus DKK conversion logic on top. Last quarter the client added two new disclosure fields to their template — you propagated the change manually.',
+    situation: 'The Danish energy ministry wants cost reports in their own format. Different from what your ERP exports. Someone retypes the numbers into the client template every month, plus DKK conversion logic on top. Last quarter the client added two new disclosure fields to their template. You propagated the change manually.',
     question: 'Smartest solution?',
     options: [
       { text: 'Convince the client to accept your standard format',                            correct: false },
@@ -239,34 +239,34 @@ window.QUESTIONS = {
       { text: 'Have IFS customised to export directly in the client format',                   correct: false },
       { text: 'Hire a junior dedicated to the monthly transcription',                          correct: false },
     ],
-    explanation: 'External clients do not adapt to you — that is a given. Two ways to embrace their requirement: customise your ERP (slow, expensive, fragile) or own a small translation script (yours to control). Pick the one you control.',
+    explanation: 'External clients do not adapt to you. That is a given. Two ways to embrace their requirement: customise your ERP (slow, expensive, fragile) or own a small translation script (yours to control). Pick the one you control.',
   },
   'baltica-2': {
     situation: 'At Baltica 2 kick-off the clock stands still while you set up the financial structure. The PM team is waiting on you: chart of accounts, cost categories, dashboards, first forecast. It takes you two weeks.',
     question: 'How can this be faster on the next project?',
     options: [
       { text: 'Block two weeks at the start of every new project as standard',                       correct: false },
-      { text: 'Start earlier — before the contract is signed',                                        correct: false },
-      { text: 'Build a reusable startup pack — template BV, default dashboards, standard categories', correct: true  },
+      { text: 'Start earlier. Before the contract is signed',                                        correct: false },
+      { text: 'Build a reusable startup pack. Template BV, default dashboards, standard categories', correct: true  },
       { text: 'Assign a second project controller to the kick-off',                                   correct: false },
     ],
-    explanation: 'Every big Van Oord project gets its own BV. Starting from zero each time is structural waste. A startup pack is not a luxury — it is a productivity multiplier.',
+    explanation: 'Every big Van Oord project gets its own BV. Starting from zero each time is structural waste. A startup pack is not a luxury. It is a productivity multiplier.',
   },
 
   // ---- DUTCH MEGAPROJECTS (darkblue) ----
   'maasvlakte-2': {
-    situation: 'Your Maasvlakte 2 PM messages you Friday 16:14: "Quick one — where are we on costs?" You know the answer takes 40 minutes of digging.',
+    situation: 'Your Maasvlakte 2 PM messages you Friday 16:14: "Quick one. Where are we on costs?" You know the answer takes 40 minutes of digging.',
     question: 'What is the real fix?',
     options: [
       { text: 'Reply that he gets an update on Monday',                                  correct: false },
       { text: 'Get faster at finding the numbers',                                        correct: false },
-      { text: 'Build a live dashboard he can open himself — he never asks again',         correct: true  },
+      { text: 'Build a live dashboard he can open himself. He never asks again',         correct: true  },
       { text: 'Ask him to send these questions by email instead',                         correct: false },
     ],
     explanation: 'The question is not "how do I answer faster" but "how do I stop being the bottleneck". Self-service dashboards are the silent killer of last-minute questions.',
   },
   'hollandse-kust-noord': {
-    situation: 'Hollandse Kust Noord is operational. You run two Crew Transfer Vessels at €8k/day each. Weather windows for technician transfers are short and unpredictable — typically 4-6 useful hours per day, sometimes zero. Last winter you logged 47 standby-only days. CFO wants 20% off CTV cost this year.',
+    situation: 'Hollandse Kust Noord is operational. You run two Crew Transfer Vessels at €8k/day each. Weather windows for technician transfers are short and unpredictable. Typically 4-6 useful hours per day, sometimes zero. Last winter you logged 47 standby-only days. CFO wants 20% off CTV cost this year.',
     question: 'Where is the lever?',
     options: [
       { text: 'Negotiate lower day rates with the CTV provider',                                          correct: false },
@@ -274,24 +274,24 @@ window.QUESTIONS = {
       { text: 'Use weather + tide + crew schedules + ML to predict productive days; schedule accordingly', correct: true  },
       { text: 'Switch to helicopter transfers for time-critical jobs',                                     correct: false },
     ],
-    explanation: '20% cost reduction is not a contract negotiation — it is a planning problem. ML on three data streams beats human gut feel on whether tomorrow is worth the sail.',
+    explanation: '20% cost reduction is not a contract negotiation. It is a planning problem. ML on three data streams beats human gut feel on whether tomorrow is worth the sail.',
   },
 
-  // ---- UK MAJOR WORKS (red) — added in batch 1 ----
+  // ---- UK MAJOR WORKS (red). Added in batch 1 ----
   'broomhill-sands': {
-    situation: 'Broomhill Sands pays per m³ of sand placed on the beach. The Environment Agency surveys before and after; you survey too. The two surveys never agree exactly — usually within 2%, occasionally 6%. On a £14M contract a 2% gap is £280k. The EA\'s hydrographic surveyor disputes your bathymetric data classification on every milestone.',
+    situation: 'Broomhill Sands pays per m³ of sand placed on the beach. The Environment Agency surveys before and after; you survey too. The two surveys never agree exactly. Usually within 2%, occasionally 6%. On a £14M contract a 2% gap is £280k. The EA\'s hydrographic surveyor disputes your bathymetric data classification on every milestone.',
     question: 'What ends the dispute cycle?',
     options: [
       { text: 'Send your raw survey data to the EA each month for them to verify',                              correct: false },
       { text: 'Hire a third-party surveyor to act as referee',                                                  correct: false },
-      { text: 'Process both surveys through one AI-assisted analysis — every discrepancy traced to its grid cell', correct: true  },
+      { text: 'Process both surveys through one AI-assisted analysis. Every discrepancy traced to its grid cell', correct: true  },
       { text: 'Accept their numbers to keep the relationship sweet',                                            correct: false },
     ],
     explanation: 'Disputes survive in the gap between two opinions. Eliminate the gap: same data, same processing, same conclusion. Whoever owns the explanation owns the outcome.',
   },
 
   'aberdeen-south': {
-    situation: 'Aberdeen South Harbour breakwater consumes 1.4M tonnes of armour rock. Each truck delivery from the quarry must meet spec: weight per piece (3–8 tonnes), gradation, density. Your QC engineer at the quay measures roughly 15% by hand-held device — passing rock goes into the structure, failing rock goes back. Two surveyors clock 60-hour weeks. Quarry is supplying ~20 truckloads a day.',
+    situation: 'Aberdeen South Harbour breakwater consumes 1.4M tonnes of armour rock. Each truck delivery from the quarry must meet spec: weight per piece (3–8 tonnes), gradation, density. Your QC engineer at the quay measures roughly 15% by hand-held device. Passing rock goes into the structure, failing rock goes back. Two surveyors clock 60-hour weeks. Quarry is supplying ~20 truckloads a day.',
     question: 'How do you keep the breakwater on spec without burning out the surveyors?',
     options: [
       { text: 'Add a third QC surveyor',                                                       correct: false },
@@ -299,12 +299,12 @@ window.QUESTIONS = {
       { text: 'Trust the quarry\'s certificates and move to spot checks only',                correct: false },
       { text: 'Accept rocks within 90% of spec to keep the line moving',                      correct: false },
     ],
-    explanation: 'A vision system never gets tired at hour 50. Surveyors stay in the loop where they add value — judging the borderline ones — instead of measuring the obvious ones.',
+    explanation: 'A vision system never gets tired at hour 50. Surveyors stay in the loop where they add value, judging the borderline ones instead of measuring the obvious ones.',
   },
 
-  // ---- EMERGING MARKETS (green) — added in batch 1 ----
+  // ---- EMERGING MARKETS (green). Added in batch 1 ----
   'greater-changhua': {
-    situation: 'Greater Changhua is your second offshore wind project for Ørsted — 100+ monopile foundations across a 30 km² field. Each install generates a 60-page report: pile verticality, penetration depth, position offset, hammer-energy log, soil resistance. The design team in Rotterdam manually cross-checks each report against the design tolerance spec (also 60 pages). Two engineers full-time, one report a day each.',
+    situation: 'Greater Changhua is your second offshore wind project for Ørsted. 100+ monopile foundations across a 30 km² field. Each install generates a 60-page report: pile verticality, penetration depth, position offset, hammer-energy log, soil resistance. The design team in Rotterdam manually cross-checks each report against the design tolerance spec (also 60 pages). Two engineers full-time, one report a day each.',
     question: 'What changes the math here?',
     options: [
       { text: 'Add a third engineer in Rotterdam to clear the backlog',                          correct: false },
@@ -316,7 +316,7 @@ window.QUESTIONS = {
   },
 
   'ain-sokhna': {
-    situation: 'Ain Sokhna is a 14-month reclamation contract on the Suez side, USD-denominated. Local subcontractors invoice in EGP, and your milestone payments convert at the actual transfer date. On your last Egyptian project the pound devalued 22% mid-contract — you absorbed €1.4M unhedged. Treasury wants earlier visibility this time.',
+    situation: 'Ain Sokhna is a 14-month reclamation contract on the Suez side, USD-denominated. Local subcontractors invoice in EGP, and your milestone payments convert at the actual transfer date. On your last Egyptian project the pound devalued 22% mid-contract. You absorbed €1.4M unhedged. Treasury wants earlier visibility this time.',
     question: 'Where do you put your effort?',
     options: [
       { text: 'Hedge the full contract value upfront with a 12-month forward',                            correct: false },
@@ -324,11 +324,11 @@ window.QUESTIONS = {
       { text: 'Have the PM chase faster milestone sign-offs every month',                                 correct: false },
       { text: 'Switch your local subcontractors to USD invoicing so they carry the FX risk',              correct: false },
     ],
-    explanation: 'Hedging is one tool. The controllable variable is time-to-cash — that is a dashboard problem, not a treasury problem. The €1.4M last time was a visibility miss, not a hedging miss.',
+    explanation: 'Hedging is one tool. The controllable variable is time-to-cash. That is a dashboard problem, not a treasury problem. The €1.4M last time was a visibility miss, not a hedging miss.',
   },
 
   'tuas-mega-port': {
-    situation: 'Tuas is a 25-year programme in 5 phases. By year 3 you are sitting on 1,400 change orders — design tweaks from PSA Singapore, consortium partner requests, regulatory updates. Each change goes through: technical impact → cost re-estimate → commercial agreement → ERP booking. Your two junior controllers in Rotterdam are six weeks behind on the booking step.',
+    situation: 'Tuas is a 25-year programme in 5 phases. By year 3 you are sitting on 1,400 change orders. Design tweaks from PSA Singapore, consortium partner requests, regulatory updates. Each change goes through: technical impact → cost re-estimate → commercial agreement → ERP booking. Your two junior controllers in Rotterdam are six weeks behind on the booking step.',
     question: 'What changes the bottleneck?',
     options: [
       { text: 'Hire a third junior to clear the backlog',                                       correct: false },
@@ -336,12 +336,12 @@ window.QUESTIONS = {
       { text: 'Switch to weekly batch processing of changes',                                   correct: false },
       { text: 'Push back on PSA to reduce the number of change orders',                         correct: false },
     ],
-    explanation: '1,400 changes in three years is not a junior\'s job — it is a system\'s job. Free the seniors to make the commercial calls; the seniors are the ones the client actually pays for.',
+    explanation: '1,400 changes in three years is not a junior\'s job. It is a system\'s job. Free the seniors to make the commercial calls; the seniors are the ones the client actually pays for.',
   },
 
   // ---- placeholder for projects without a specific question yet ----
   _placeholder: {
-    situation: '[Placeholder — a project-specific question will be added later for this tile.]',
+    situation: '[Placeholder. A project-specific question will be added later for this tile.]',
     question: 'What is the smartest approach to a recurring manual task?',
     options: [
       { text: 'Build a better Excel template',                                                                  correct: false },
@@ -349,7 +349,7 @@ window.QUESTIONS = {
       { text: 'Hire someone extra',                                                                             correct: false },
       { text: 'Wait until the system gets upgraded',                                                            correct: false },
     ],
-    explanation: 'Placeholder — final explanation to follow.',
+    explanation: 'Placeholder. Final explanation to follow.',
   },
 };
 
@@ -374,7 +374,7 @@ window.BRIEFINGS = [
   { title: 'Excel crash',          text: 'Your consolidation model crashed. Two days of work, gone.',                                            tokenChange: -3, kind: 'pain' },
   { title: 'AI breakthrough',      text: 'You fully automated a dashboard. The whole team benefits.',                                            tokenChange:  3, kind: 'win',  collective: true },
   { title: 'Audit findings',       text: 'External auditor finds unexplained variances. Two days of reconciliation work.',                       tokenChange: -2, kind: 'pain' },
-  { title: 'New hire',             text: 'Trainee starts — two weeks of manual-process onboarding before they help.',                            tokenChange: -2, kind: 'pain' },
+  { title: 'New hire',             text: 'Trainee starts. Two weeks of manual-process onboarding before they help.',                            tokenChange: -2, kind: 'pain' },
   { title: 'Dashboard live',       text: 'Power BI dashboard goes live. PMs stop sending Friday-afternoon DMs to anyone.',                       tokenChange:  3, kind: 'win',  collective: true },
   { title: 'OCR running',          text: 'OCR live across all sites. 195 receipts auto-processed this week, you handle the five edge cases.',  tokenChange:  2, kind: 'win',  collective: true },
   { title: 'Month-end grind',      text: 'Month-end. Working late. Everyone pitches in. The pizza is on the company.',                          tokenChange: -2, kind: 'pain', collective: true },
@@ -399,7 +399,7 @@ window.MANUAL_WORK_TEXTS = [
 ];
 
 // ============================================================================
-// Five team pawns — Van Oord equipment.
+// Five team pawns. Van Oord equipment.
 // ============================================================================
 
 window.TEAM_DEFS = [
